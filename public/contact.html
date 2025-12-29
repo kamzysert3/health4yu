@@ -378,7 +378,7 @@
       const fileInput = document.getElementById("fileInput");
       const uploadResp = document.getElementById("uploadResp");
 
-      const uploadFile = async () => {
+      uploadBtn.addEventListener("click", async () => {
         const file = fileInput.files[0];
         if (!file) return showToast("Please pick a file first.", "error");
         showToast("Uploading…", "info", 4000);
@@ -410,9 +410,7 @@
         } catch (err) {
           showToast("Upload failed: " + (err.message || err), "error");
         }
-      }
-
-      uploadBtn.addEventListener("click", uploadFile);
+      });
 
       // load fee and display banner on page load
       (async function loadFee() {
@@ -452,7 +450,21 @@
         if (file && !uploaded) {
           showToast("Uploading file before sending...", "info");
           try {
-            await uploadFile();
+            const fd = new FormData();
+            fd.append("document", file);
+            const res = await fetch("/upload/document", {
+              method: "POST",
+              body: fd,
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || JSON.stringify(data));
+            document.getElementById("uploadedFilename").value = data.filename;
+            document.getElementById("uploadedOriginalName").value =
+              data.originalname;
+            showToast(`Uploaded: ${data.originalname}`, "success");
+            // clear the file input so the file is not sent again as part of the form
+            fileInput.value = "";
+            uploadBtn.disabled = true;
           } catch (err) {
             showToast("Upload failed: " + (err.message || err), "error");
             return;
