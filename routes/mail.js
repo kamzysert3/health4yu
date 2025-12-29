@@ -149,7 +149,7 @@ router.post('/checkout', upload.none(), async (req, res) => {
     const { name, email, subject, message, uploadedFilename, uploadedOriginalName } = req.body;
 
     const feeCents = parseInt(process.env.CONTACT_FEE_CENTS || '1000', 10);
-    const feeCurrency = (process.env.CONTACT_FEE_CURRENCY || 'usd').toLowerCase();
+    const feeCurrency = (process.env.CONTACT_FEE_CURRENCY || 'eur').toLowerCase();
     const requirePayment = process.env.CONTACT_REQUIRE_PAYMENT !== 'false';
 
     // if payment disabled, send immediately
@@ -256,7 +256,7 @@ router.get('/cancel', (req, res) => {
 // Public helper: return current contact fee (so the client can display it)
 router.get('/fee', (req, res) => {
   const feeCents = parseInt(process.env.CONTACT_FEE_CENTS || '1000', 10);
-  const currency = (process.env.CONTACT_FEE_CURRENCY || 'usd').toLowerCase();
+  const currency = (process.env.CONTACT_FEE_CURRENCY || 'eur').toLowerCase();
   res.json({ feeCents, currency });
 });
 

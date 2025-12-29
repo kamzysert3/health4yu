@@ -90,8 +90,8 @@ router.get('/cancel', (req, res) => {
 // Create a Checkout Session for a donation. Expects JSON body: { amount, currency, success_url, cancel_url }
 router.post('/', async (req, res) => {
     try {
-        const { amount, currency = 'usd', success_url, cancel_url } = req.body;
-        if (!amount) return res.status(400).json({ error: 'Missing amount (in major currency units, e.g. 10 for $10)' });
+        const { amount, currency = 'eur', success_url, cancel_url } = req.body;
+        if (!amount) return res.status(400).json({ error: 'Missing amount (in major currency units, e.g. 10 for €10)' });
         if (!success_url || !cancel_url) return res.status(400).json({ error: 'Missing success_url or cancel_url' });
 
         const amountInt = Math.round(Number(amount) * 100); // convert to cents
