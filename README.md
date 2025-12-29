@@ -90,7 +90,7 @@ API endpoints
 - `POST /mail` — contact form endpoint that immediately sends an email (used when payments are not required). Sends an email with fields `name`, `email`, `subject`, `message`. If the form includes `uploadedFilename` (returned by `POST /upload/document`) the server will attach that file from the `uploads/` directory to the email.
 - `POST /mail/checkout` — create a Stripe Checkout session to pay the contact submission fee (default $10). The server stores the submitted form data temporarily and returns a checkout `url`; the user is redirected to Stripe to complete payment. On success the user is redirected to a protected `contact-success` page which triggers the server to verify payment and send the stored message. See `CONTACT_FEE_CENTS` in the env variables to configure the amount.
 
-Uploads are saved to the `uploads/` directory.
+Uploads are saved to the `tmp/uploads/` directory (uploaded files are treated as temporary and by default are deleted after processing).
 
 Notes
 

@@ -31,8 +31,8 @@ function appendQuery(url, key, val) {
   return url + (url.includes('?') ? '&' : '?') + encodeURIComponent(key) + '=' + encodeVal(val);
 }
 
-// store uploads in the project's uploads/ directory
-const uploadsDir = path.join(__dirname, '..', 'uploads');
+// store uploads in the project's tmp/uploads/ directory (temporary storage)
+const uploadsDir = path.join(__dirname, '..', 'tmp', 'uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
 const storage = multer.diskStorage({

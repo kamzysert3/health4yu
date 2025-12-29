@@ -1,12 +1,17 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const fs = require('fs');
 
 const router = express.Router();
 
+// store uploads under tmp/uploads to make it explicit these are temporary files
+const uploadsDir = path.join(__dirname, '..', 'tmp', 'uploads');
+if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, '..', 'uploads'));
+    cb(null, uploadsDir);
   },
   filename: function (req, file, cb) {
     const unique = Date.now() + '-' + Math.round(Math.random() * 1e9);
@@ -29,7 +34,7 @@ router.post('/document', upload.single('document'), (req, res) => {
     originalname: file.originalname,
     mimetype: file.mimetype,
     size: file.size,
-    path: `/uploads/${file.filename}`
+    path: `/tmp/uploads/${file.filename}`
   });
 });
 

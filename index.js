@@ -12,8 +12,8 @@ const mailRouter = require('./routes/mail');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// ensure uploads directory exists
-const uploadsDir = path.join(__dirname, 'uploads');
+// ensure tmp/uploads directory exists (uploads are temporary)
+const uploadsDir = path.join(__dirname, 'tmp', 'uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
 app.use(morgan('dev'));
