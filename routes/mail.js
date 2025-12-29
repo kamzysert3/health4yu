@@ -76,9 +76,9 @@ async function createTransporter() {
 
 // helper: send email from contact data and optionally delete attachments
 async function sendContactEmail({ name, email, subject, message, uploadedFilename, uploadedOriginalName, extraFiles = [] }) {
-  const from = process.env.MAIL_FROM || 'Website Contact <contact@health4yu.de>';
-  const to = process.env.MAIL_TO || 'contact@health4yu.de';
-  const replyTo = email || process.env.MAIL_REPLY_TO || 'jane@gmail.com';
+  const from = 'Website Contact <contact@health4yu.de>';
+  const to = 'contact@health4yu.de';
+  const replyTo = email;
 
   const text = `Name: ${name || '—'}\nEmail: ${email || '—'}\nSubject: ${subject || '—'}\n\n${message || ''}`;
   const html = `<p><strong>Name:</strong> ${name || '—'}</p><p><strong>Email:</strong> ${email || '—'}</p><p><strong>Subject:</strong> ${subject || '—'}</p><hr><p>${(message||'').replace(/\n/g, '<br>')}</p>`;
