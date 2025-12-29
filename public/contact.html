@@ -258,8 +258,8 @@
           <h1 class="section-title">Contact Us</h1>
           <p class="lead">
             Are you a patient seeking medical treatment or consultation in
-            Germany/Europe? Use the form to request a clinical assessment
-            and upload your medical reports.
+            Germany/Europe? Use the form to request a clinical assessment and
+            upload your medical reports.
           </p>
           <div
             id="chargeBanner"
@@ -378,7 +378,7 @@
       const fileInput = document.getElementById("fileInput");
       const uploadResp = document.getElementById("uploadResp");
 
-      const uploadFile = async () => {
+      uploadBtn.addEventListener("click", async () => {
         const file = fileInput.files[0];
         if (!file) return showToast("Please pick a file first.", "error");
         showToast("Uploading…", "info", 4000);
@@ -410,9 +410,7 @@
         } catch (err) {
           showToast("Upload failed: " + (err.message || err), "error");
         }
-      }
-
-      uploadBtn.addEventListener("click", uploadFile);
+      });
 
       // load fee and display banner on page load
       (async function loadFee() {
@@ -452,7 +450,30 @@
         if (file && !uploaded) {
           showToast("Uploading file before sending...", "info");
           try {
-            await uploadFile();
+            const fd = new FormData();
+            fd.append("document", file);
+            const res = await fetch("/upload/document", {
+              method: "POST",
+              body: fd,
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || JSON.stringify(data));
+            showToast(
+              `Uploaded: ${data.originalname} (${Math.round(
+                data.size / 1024
+              )} KB)`,
+              "success"
+            );
+            // populate hidden inputs so the /mail route can attach the file
+            document.getElementById("uploadedFilename").value = data.filename;
+            document.getElementById("uploadedOriginalName").value =
+              data.originalname;
+            document.getElementById("uploadNote").textContent =
+              "File attached and ready to send.";
+            // clear the visible file input so the browser won't include the file in the final form POST
+            fileInput.value = "";
+            // optionally disable the upload button to prevent re-uploads
+            uploadBtn.disabled = true;
           } catch (err) {
             showToast("Upload failed: " + (err.message || err), "error");
             return;
