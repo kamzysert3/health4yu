@@ -32,7 +32,7 @@ function appendQuery(url, key, val) {
 }
 
 // store uploads in the project's tmp/uploads/ directory (temporary storage)
-const uploadsDir = path.join(__dirname, '..', 'tmp', 'uploads');
+const uploadsDir = path.join('..', 'tmp', 'uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
 const storage = multer.diskStorage({

@@ -13,7 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 // ensure tmp/uploads directory exists (uploads are temporary)
-const uploadsDir = path.join(__dirname, 'tmp', 'uploads');
+const uploadsDir = path.join('tmp', 'uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
 app.use(morgan('dev'));

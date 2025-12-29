@@ -6,7 +6,7 @@ const fs = require('fs');
 const router = express.Router();
 
 // store uploads under tmp/uploads to make it explicit these are temporary files
-const uploadsDir = path.join(__dirname, '..', 'tmp', 'uploads');
+const uploadsDir = path.join('..', 'tmp', 'uploads');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
 const storage = multer.diskStorage({
