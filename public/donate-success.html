@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Donation Successful — Health4Yu</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Segoe UI, system-ui, Helvetica, Arial;
+        background: #06060a;
+        color: #fff;
+        display: flex;
+        min-height: 100vh;
+        align-items: center;
+        justify-content: center;
+      }
+      .card {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          transparent
+        );
+        padding: 36px;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        max-width: 720px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      }
+      .h {
+        color: #00ff88;
+        margin: 0 0 8px;
+      }
+      .muted {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1 class="h">Thank you!</h1>
+      <p id="message">Thank you for your support.</p>
+      <p class="muted" id="status"></p>
+      <p class="muted" id="reference"></p>
+      <div
+        style="
+          margin-top: 20px;
+          display: flex;
+          gap: 12px;
+          justify-content: center;
+        "
+      >
+        <a
+          style="
+            background: linear-gradient(135deg, #0066ff, #00d4ff);
+            padding: 10px 16px;
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+          "
+          href="/"
+          >Return Home</a
+        >
+        <a
+          style="
+            background: linear-gradient(135deg, #0066ff, #00d4ff);
+            padding: 10px 16px;
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+          "
+          href="/Donate"
+          >Donate Again</a
+        >
+      </div>
+    </div>
+
+    <script>
+      async function fetchInfo(token) {
+        try {
+          const res = await fetch('/donate/info?token=' + encodeURIComponent(token));
+          if (!res.ok) {
+            const err = await res.json().catch(() => ({}));
+            throw new Error(err.error || res.statusText || 'Error');
+          }
+          const data = await res.json();
+          // populate
+          if (data.amount) document.getElementById('message').innerHTML = `Amount: <strong>${data.amount} ${data.currency}</strong>`;
+          document.getElementById('status').textContent = 'Status: ' + (data.status || 'unknown');
+          if (data.reference) document.getElementById('reference').textContent = 'Reference: ' + data.reference;
+        } catch (err) {
+          // Token missing/invalid/expired or other error
+          document.getElementById('message').textContent = 'Thank you — payment processed.';
+          document.getElementById('status').textContent = typeof err.message === 'string' ? err.message : '';
+        }
+      }
+
+      (function init() {
+        const params = new URLSearchParams(location.search);
+        const token = params.get('token');
+        if (!token) {
+          // If no token, show a generic message and prevent session info access
+          document.getElementById('message').textContent = 'Thank you for your support.';
+          document.getElementById('status').textContent = 'No session information available.';
+          return;
+        }
+        fetchInfo(token);
+      })();
+    </script>
+  </body>
+</html>

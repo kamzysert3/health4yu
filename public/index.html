@@ -1,0 +1,1824 @@
+<!-- Background Music Player -->
+<audio id="bgMusic" loop>
+  <source src="mm.mp3" type="audio/mpeg" />
+  <source src="mm.mp3" type="audio/ogg" />
+  Your browser does not support the audio element.
+</audio>
+<style>
+  /* === HIGH-TECH MUSIC CONTROLS === */
+
+  #music-controls {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 10000;
+    background: linear-gradient(
+      145deg,
+      rgba(10, 10, 26, 0.95),
+      rgba(20, 20, 40, 0.95)
+    );
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--hologram-blue);
+    box-shadow: var(--panel-glow), 0 0 40px rgba(138, 43, 226, 0.3),
+      inset 0 0 20px rgba(0, 243, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-family: "Orbitron", "Courier New", monospace;
+    animation: panelFloat 6s ease-in-out infinite;
+  }
+
+  /* Holographic effect border */
+  #music-controls::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(
+      45deg,
+      var(--hologram-blue),
+      var(--hologram-purple),
+      var(--neon-pink),
+      var(--matrix-green)
+    );
+    border-radius: 14px;
+    z-index: -1;
+    opacity: 0.6;
+    animation: hologramBorder 3s linear infinite;
+  }
+
+  /* Data stream effect (optional background) */
+  #music-controls .data-stream {
+    position: absolute;
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--hologram-blue),
+      transparent
+    );
+    animation: dataFlow 1.5s linear infinite;
+    opacity: 0;
+  }
+
+  #music-controls .data-stream:nth-child(1) {
+    left: 10%;
+    top: -20px;
+    animation-delay: 0s;
+  }
+
+  #music-controls .data-stream:nth-child(2) {
+    left: 30%;
+    top: -20px;
+    animation-delay: 0.3s;
+  }
+
+  #music-controls .data-stream:nth-child(3) {
+    left: 50%;
+    top: -20px;
+    animation-delay: 0.6s;
+  }
+
+  #music-controls .data-stream:nth-child(4) {
+    left: 70%;
+    top: -20px;
+    animation-delay: 0.9s;
+  }
+
+  #music-controls .data-stream:nth-child(5) {
+    left: 90%;
+    top: -20px;
+    animation-delay: 1.2s;
+  }
+
+  @keyframes dataFlow {
+    0% {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    #music-controls {
+      bottom: 20px;
+      right: 20px;
+      left: 20px;
+      width: auto;
+    }
+
+    #music-controls button {
+      width: 100%;
+    }
+  }
+
+  /* Add data stream elements dynamically */
+</style>
+<script>
+  // Add this to your existing JavaScript
+  function addDataStreams() {
+    const controls = document.getElementById("music-controls");
+    for (let i = 0; i < 5; i++) {
+      const stream = document.createElement("div");
+      stream.className = "data-stream";
+      controls.appendChild(stream);
+    }
+  }
+
+  // Call this after creating controls
+  function createMusicControls() {
+    // ... existing code ...
+
+    // Add data stream effects
+    setTimeout(addDataStreams, 100);
+  }
+</script>
+<script>
+  // Wait for the page to fully load
+  window.addEventListener("load", function () {
+    const bgMusic = document.getElementById("bgMusic");
+
+    // Try to play the music automatically
+    const playPromise = bgMusic.play();
+
+    // Handle autoplay restrictions
+    if (playPromise !== undefined) {
+      playPromise.catch((error) => {
+        console.log("Autoplay prevented:", error);
+        // Create a fallback play button
+        createMusicControls();
+      });
+    }
+  });
+
+  // Create visible controls if autoplay is blocked
+  function createMusicControls() {
+    const musicControls = document.createElement("div");
+    musicControls.id = "music-controls";
+    musicControls.innerHTML = `
+            <button id="playMusicBtn"> Play Background Music</button>
+            <button id="muteMusicBtn"> Mute</button>
+        `;
+    musicControls.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+            background: rgba(10, 20, 22, 0.9);
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid var(--teal-primary);
+        `;
+
+    document.body.appendChild(musicControls);
+
+    document
+      .getElementById("playMusicBtn")
+      .addEventListener("click", function () {
+        document.getElementById("bgMusic").play();
+        musicControls.style.display = "none";
+      });
+
+    document
+      .getElementById("muteMusicBtn")
+      .addEventListener("click", function () {
+        musicControls.style.display = "none";
+      });
+  }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health4Yu - Precision Care</title>
+    <link rel="icon" type="image/x-icon" href="ad (4).jpg" />
+    <link rel="icon" type="image/png" href="ad (3).jpg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --bg-dark: #08080a;
+        --bg-lighter: #121217;
+        --accent-primary: #0066ff;
+        --accent-glow: rgba(0, 102, 255, 0.4);
+        --accent-secondary: #00d4ff;
+        --text-main: #ffffff;
+        --text-secondary: #a0a0ab;
+        --glass: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --success: #00ff88;
+        --success-glow: rgba(0, 255, 136, 0.2);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        overflow-x: hidden;
+        line-height: 1.6;
+      }
+
+      /* --- ANIMATIONS --- */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .reveal {
+        animation: fadeIn 0.8s ease forwards;
+      }
+      .float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      /* --- MOBILE FIRST NAVBAR --- */
+      header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        background: rgba(8, 8, 10, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--glass-border);
+        transition: all 0.3s ease;
+      }
+
+      .header-container {
+        max-width: 1300px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 25px;
+      }
+
+      .logo {
+        font-weight: 800;
+        font-size: 1.4rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--accent-primary);
+        z-index: 1001;
+      }
+
+      .logo i {
+        color: var(--accent-primary);
+        filter: drop-shadow(0 0 8px var(--accent-glow));
+      }
+
+      /* Mobile Menu Button */
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 1001;
+      }
+
+      .menu-toggle span {
+        width: 100%;
+        height: 3px;
+        background-color: var(--text-main);
+        border-radius: 3px;
+        transition: 0.3s;
+      }
+
+      .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      /* Navigation */
+      nav {
+        display: flex;
+        align-items: center;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 35px;
+        align-items: center;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        font-weight: 600;
+        transition: 0.3s;
+        position: relative;
+      }
+
+      nav ul li a:hover {
+        color: var(--text-main);
+      }
+
+      nav ul li a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent-primary);
+        transition: width 0.3s;
+      }
+
+      nav ul li a:hover::after {
+        width: 100%;
+      }
+
+      .btn-donate {
+        background: var(--accent-primary);
+        color: white;
+        padding: 12px 25px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 700;
+        transition: 0.3s;
+        margin-left: 15px;
+      }
+
+      .btn-donate:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
+        background: #0052cc;
+      }
+
+      /* --- HERO SECTION --- */
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        padding: 140px 25px 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: radial-gradient(
+            circle at 20% 50%,
+            rgba(0, 102, 255, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(0, 212, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+          url("./cf\ \(2\).jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          rgba(0, 102, 255, 0.1),
+          rgba(0, 212, 255, 0.05)
+        );
+        z-index: 1;
+      }
+
+      .animated-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      /* Transparent Hero Card */
+      .hero-content {
+        position: relative;
+        z-index: 3;
+        max-width: 800px;
+        width: 100%;
+        padding: 3rem;
+        background: rgba(18, 18, 23, 0.2);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+          0 0 0 1px rgba(255, 255, 255, 0.05),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        animation: fadeIn 1s ease-out;
+      }
+
+      .hero-content h1 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        line-height: 1.1;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        letter-spacing: -1.5px;
+        background: linear-gradient(
+          135deg,
+          var(--text-main) 0%,
+          var(--text-secondary) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-content h1 span {
+        background: linear-gradient(
+          135deg,
+          var(--accent-primary) 0%,
+          var(--accent-secondary) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-content p {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 600px;
+        margin-bottom: 2.5rem;
+        line-height: 1.6;
+      }
+
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--accent-primary) 0%,
+          var(--accent-secondary) 100%
+        );
+        color: white;
+        padding: 18px 40px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        display: inline-block;
+        transition: all 0.3s ease;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        font-size: 1rem;
+      }
+
+      .btn-primary::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: 0.5s;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 40px rgba(0, 102, 255, 0.3);
+      }
+
+      .btn-primary:hover::before {
+        left: 100%;
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, var(--success) 0%, #00cc6a 100%);
+        color: var(--bg-dark);
+        padding: 18px 40px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        display: inline-block;
+        transition: all 0.3s ease;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        font-size: 1rem;
+      }
+
+      .btn-success:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 40px var(--success-glow);
+      }
+
+      /* --- SECTION COMMON STYLES --- */
+      .section-container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 100px 25px;
+      }
+
+      .section-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 800;
+        margin-bottom: 3rem;
+        text-align: center;
+        background: linear-gradient(
+          135deg,
+          var(--text-main) 0%,
+          var(--accent-secondary) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .section-subtitle {
+        font-size: clamp(1.5rem, 3vw, 2.2rem);
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-align: center;
+        color: var(--text-main);
+      }
+
+      /* --- VOLUNTEER HERO SECTION --- */
+      .volunteer-hero {
+        position: relative;
+        min-height: 70vh;
+        padding: 120px 25px 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 102, 255, 0.1),
+          rgba(0, 212, 255, 0.05)
+        );
+        border-radius: 40px;
+        margin: 40px 25px;
+      }
+
+      .volunteer-hero-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        max-width: 900px;
+      }
+
+      .volunteer-hero h2 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        line-height: 1.1;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--accent-primary) 0%,
+          var(--success) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .volunteer-hero p {
+        font-size: clamp(1.1rem, 2vw, 1.4rem);
+        color: var(--text-secondary);
+        max-width: 700px;
+        margin: 0 auto 3rem;
+        line-height: 1.7;
+      }
+
+      /* --- ACTION CARDS SECTION --- */
+      .action-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin: 4rem 0;
+      }
+
+      .action-card {
+        background: linear-gradient(
+          145deg,
+          rgba(255, 255, 255, 0.05),
+          rgba(255, 255, 255, 0.02)
+        );
+        padding: 40px;
+        border-radius: 30px;
+        border: 1px solid var(--glass-border);
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .action-card.donate {
+        border-top: 4px solid var(--accent-primary);
+      }
+
+      .action-card.participate {
+        border-top: 4px solid var(--success);
+      }
+
+      .action-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0, 102, 255, 0.2);
+        background: rgba(255, 255, 255, 0.07);
+      }
+
+      .action-icon {
+        font-size: 3rem;
+        margin-bottom: 25px;
+        display: block;
+      }
+
+      .action-card.donate .action-icon {
+        color: var(--accent-primary);
+      }
+
+      .action-card.participate .action-icon {
+        color: var(--success);
+      }
+
+      .action-card h3 {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+
+      .action-card p {
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      /* --- HOW TO HELP SECTION --- */
+      .help-section {
+        background: var(--bg-lighter);
+        border-radius: 40px;
+        margin: 60px 25px;
+        padding: 80px 25px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .help-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 100% 0%,
+          rgba(0, 102, 255, 0.05) 0%,
+          transparent 70%
+        );
+        z-index: 0;
+      }
+
+      .help-list {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .help-item {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 30px;
+        border-radius: 20px;
+        margin-bottom: 25px;
+        border: 1px solid var(--glass-border);
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        transition: all 0.3s ease;
+      }
+
+      .help-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--accent-primary);
+        transform: translateX(10px);
+      }
+
+      .help-number {
+        background: var(--accent-primary);
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        flex-shrink: 0;
+        font-size: 1.2rem;
+      }
+
+      .help-content h4 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        color: var(--text-main);
+      }
+
+      .help-content p {
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      .highlight {
+        color: var(--success);
+        font-weight: 600;
+      }
+
+      /* --- VOLUNTEER IMPACT SECTION --- */
+      .volunteer-impact {
+        padding: 80px 25px;
+        background: linear-gradient(145deg, #121217, #0a0a0c);
+        border-radius: 40px;
+        margin: 60px 25px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .volunteer-impact::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(0, 255, 136, 0.05) 0%,
+          transparent 70%
+        );
+        z-index: 0;
+      }
+
+      .impact-content {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .impact-content p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+        color: var(--text-secondary);
+      }
+
+      .testimonial {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 40px;
+        border-radius: 20px;
+        border: 1px solid var(--glass-border);
+        margin-top: 50px;
+        position: relative;
+      }
+
+      .testimonial::before {
+        content: '"';
+        position: absolute;
+        top: -30px;
+        left: 40px;
+        font-size: 8rem;
+        color: var(--accent-primary);
+        opacity: 0.2;
+        font-family: serif;
+      }
+
+      .testimonial p {
+        font-style: italic;
+        font-size: 1.2rem;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+      }
+
+      .testimonial-author {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .author-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(
+          135deg,
+          var(--accent-primary),
+          var(--accent-secondary)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+      }
+
+      .author-info h4 {
+        color: var(--text-main);
+        font-weight: 600;
+      }
+
+      .author-info span {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      /* --- CALL TO ACTION SECTION --- */
+      .cta-section {
+        text-align: center;
+        padding: 100px 25px;
+      }
+
+      .cta-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .cta-content h2 {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        margin-bottom: 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--text-main) 0%,
+          var(--accent-secondary) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .cta-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 3rem;
+        flex-wrap: wrap;
+      }
+
+      /* --- FOOTER --- */
+      footer {
+        text-align: center;
+        padding: 40px 25px;
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        border-top: 1px solid var(--glass-border);
+        background: var(--bg-lighter);
+      }
+
+      /* --- RESPONSIVE DESIGN --- */
+      @media (max-width: 992px) {
+        .header-container {
+          padding: 20px;
+        }
+
+        .menu-toggle {
+          display: flex;
+        }
+
+        nav {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+          background: rgba(8, 8, 10, 0.98);
+          backdrop-filter: blur(30px);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          transform: translateX(-100%);
+          transition: transform 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+          z-index: 1000;
+        }
+
+        nav.active {
+          transform: translateX(0);
+        }
+
+        nav ul {
+          flex-direction: column;
+          gap: 30px;
+          align-items: center;
+          padding: 0 20px;
+          width: 100%;
+        }
+
+        nav ul li {
+          width: 100%;
+          text-align: center;
+        }
+
+        nav ul li a {
+          font-size: 1.2rem;
+          padding: 15px;
+          display: block;
+          width: 100%;
+        }
+
+        .btn-donate {
+          margin: 20px 0 0 0;
+          width: 80%;
+          text-align: center;
+          padding: 15px;
+        }
+
+        .hero {
+          padding: 120px 20px 60px;
+        }
+
+        .hero-content {
+          padding: 2rem;
+          margin: 0 10px;
+        }
+
+        .volunteer-hero {
+          margin: 20px;
+          padding: 80px 20px 40px;
+        }
+
+        .action-cards {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .help-section {
+          margin: 40px 20px;
+          padding: 60px 20px;
+        }
+
+        .help-item {
+          padding: 20px;
+          flex-direction: column;
+          gap: 15px;
+        }
+
+        .volunteer-impact {
+          margin: 40px 20px;
+          padding: 60px 20px;
+        }
+
+        .testimonial {
+          padding: 30px 20px;
+        }
+
+        .cta-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .btn-primary,
+        .btn-success {
+          width: 100%;
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-content h1 {
+          font-size: 2.2rem;
+        }
+
+        .volunteer-hero h2 {
+          font-size: 2.2rem;
+        }
+
+        .testimonial::before {
+          font-size: 5rem;
+          left: 20px;
+        }
+      }
+
+      @media (min-width: 993px) {
+        nav {
+          display: flex !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .header-container {
+          padding: 15px;
+        }
+
+        .logo {
+          font-size: 1.2rem;
+        }
+
+        .hero {
+          padding: 100px 15px 40px;
+        }
+
+        .hero-content {
+          padding: 1.5rem;
+        }
+
+        .volunteer-hero {
+          margin: 15px;
+          padding: 60px 15px 30px;
+        }
+
+        .action-card,
+        .help-item {
+          padding: 25px;
+        }
+
+        .testimonial {
+          padding: 25px 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header with Mobile Navbar -->
+    <header>
+      <div class="header-container">
+        <span> <img height="45cm" src="logo.webp" alt="" srcset="" /></span>
+
+        <button class="menu-toggle" id="menuToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="mainNav">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/participate">Volunteer</a></li>
+
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/Donate" class="btn-donate">Donate Now</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <canvas class="animated-canvas" id="heroCanvas"></canvas>
+
+      <div class="hero-content">
+        <h1>Precision Care <br /><span>Without Borders</span></h1>
+        <p>
+          Bridging global healthcare gaps through premium medical consultations
+          and expert translation services. Join us in creating a healthier world
+          for everyone.
+        </p>
+        <div class="cta-group">
+          <a href="about.html" class="btn-primary"> Learn More Here </a>
+        </div>
+      </div>
+    </section>
+    <section class="about-bento-section" id="about">
+      <div class="container">
+        <div class="bento-grid">
+          <div
+            style="color: #050117"
+            class="bento-item bento-main reveal-black"
+          >
+            <span class="badge">About Health4Yu</span>
+            <h2 style="color: #050117">
+              International Bilateral Health Relations and Projects
+            </h2>
+            <p>
+              Health4Yu is an intercultural charity organization emerging from
+              the motivation to offer solutions in healthcare, education, and
+              development assistance within African-German discourses.
+            </p>
+            <div class="cta-buttons">
+              <a href="Donate.html" class="btn-success">Donate Now</a>
+              <a href="participate.html" class="btn-primary">Participate</a>
+            </div>
+          </div>
+
+          <div class="bento-item bento-image-1 reveal">
+            <img src="vf (3).jpg" alt="Healthcare support" />
+          </div>
+
+          <div style="color: #050117" class="bento-item bento-info reveal">
+            <h3>Our Values</h3>
+            <p>
+              We are independent, charitable, and politically impartial,
+              focusing on sustainable healthcare solutions.
+            </p>
+          </div>
+          <div class="bento-item bento-focus reveal">
+            <h3>Our Focus</h3>
+            <p>
+              Primarily supporting Africans and emigrants, while welcoming all
+              nationalities in our mission.
+            </p>
+          </div>
+
+          <div class="bento-item bento-image-2 reveal">
+            <img
+              style="height: 13cm"
+              src="vf (4).jpg"
+              alt="Intercultural community"
+            />
+            <div class="overlay-text">Intercultural Unity</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <style>
+      .about-bento-section {
+        padding: 80px 5%;
+        background-color: #0f0e0e;
+      }
+
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 300px);
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .bento-item {
+        background: #fff;
+        border-radius: 24px;
+        overflow: hidden;
+        position: relative;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      /* Grid Positioning */
+      .bento-main {
+        grid-column: span 2;
+        grid-row: span 2;
+        background: #ffffff;
+      }
+      .bento-image-1 {
+        grid-column: span 1;
+        grid-row: span 1;
+        padding: 0;
+      }
+      .bento-info {
+        grid-column: span 1;
+        grid-row: span 1;
+        background: #e8f5e9;
+      } /* Light green tint */
+      .bento-image-2 {
+        grid-column: span 1;
+        grid-row: span 1;
+        padding: 0;
+      }
+      .bento-focus {
+        grid-column: span 1;
+        grid-row: span 1;
+        background: #2e7d32;
+        color: white;
+      }
+
+      /* Image Styling */
+      .bento-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .bento-item:hover img {
+        transform: scale(1.05);
+      }
+
+      /* Typography & Buttons */
+      .badge {
+        background: #2e7d32;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        width: fit-content;
+        margin-bottom: 15px;
+      }
+
+      .bento-main h2 {
+        font-size: 2.5rem;
+        line-height: 1.2;
+        margin-bottom: 20px;
+      }
+      .cta-buttons {
+        margin-top: 25px;
+        display: flex;
+        gap: 15px;
+      }
+
+      /* Responsive for Tablets/Phones */
+      @media (max-width: 992px) {
+        .bento-grid {
+          grid-template-columns: repeat(2, 1fr);
+          grid-template-rows: auto;
+        }
+        .bento-main {
+          grid-column: span 2;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .bento-grid {
+          grid-template-columns: 1fr;
+        }
+        .bento-main,
+        .bento-image-1,
+        .bento-info,
+        .bento-image-2,
+        .bento-focus {
+          grid-column: span 1;
+        }
+      }
+    </style>
+    <!-- Volunteer Hero Section -->
+    <section class="volunteer-hero" id="volunteer">
+      <div class="volunteer-hero-content reveal">
+        <h2 style="color: #0066ff">
+          Voluntary Work Moves Us<br />And the World
+        </h2>
+        <p>
+          How do you want to move us and the world? Join our mission and become
+          part of a global movement transforming healthcare through compassion
+          and action.
+        </p>
+        <div class="cta-buttons">
+          <a href="Donate.html" class="btn-success">Donate Now</a>
+          <a href="participate.html" class="btn-primary">Participate</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="services-section-dark" id="services">
+      <div class="container">
+        <div class="section-header reveal">
+          <span class="badge">Our Services</span>
+          <h2 class="text-white">
+            Healthcare Solutions <br /><span>Without Limits</span>
+          </h2>
+        </div>
+
+        <div class="services-bento-grid">
+          <div class="s-bento-item s-main reveal">
+            <img src="ad (4).jpg" alt="Consultation" class="bg-image" />
+            <div class="s-content">
+              <span class="s-icon"></span>
+              <h3>Health Consultations</h3>
+              <p>
+                Direct access to professional medical advice and personalized
+                wellness guidance from global experts.
+              </p>
+            </div>
+          </div>
+
+          <div class="s-bento-item s-video reveal">
+            <video autoplay muted loop playsinline class="bg-video">
+              <source
+                src="https://cdn.pixabay.com/video/2025/11/28/318654_tiny.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <div class="video-overlay-dark"></div>
+            <div class="s-content">
+              <span class="s-icon"></span>
+              <h3>Medical Translation</h3>
+              <p>
+                Expert translation of medical reports and second opinions to
+                bridge language gaps.
+              </p>
+            </div>
+          </div>
+
+          <div class="s-bento-item s-glass reveal">
+            <div class="s-content">
+              <span class="s-icon"></span>
+              <h3>Medical Matters</h3>
+              <p>
+                Assisting in complex medical navigation and patient advocacy.
+              </p>
+            </div>
+          </div>
+
+          <div class="s-bento-item s-featured reveal">
+            <div class="s-content">
+              <div class="accent-line"></div>
+              <span class="s-icon"></span>
+              <h3>International Bilateral Health Relations</h3>
+              <p>
+                Developing sustainable health projects and relations within
+                African-German discourses to foster global growth.
+              </p>
+            </div>
+          </div>
+
+          <div class="s-bento-item s-image reveal">
+            <img src="download.jpg" alt="Exchange" class="bg-image" />
+            <div class="s-content">
+              <span class="s-icon"></span>
+              <h3>Medical Exchange</h3>
+              <p>Professional programs for knowledge transfer.</p>
+            </div>
+          </div>
+
+          <div class="s-bento-item s-dark reveal">
+            <div class="s-content">
+              <span class="s-icon"></span>
+              <h3>Policy & Innovation</h3>
+              <p>
+                Networking on health policies and developing innovative health
+                programs.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <style>
+      /* Dark Services Section Styling */
+      .services-section-dark {
+        padding: 100px 5%;
+        background-color: #050117; /* Deepest dark */
+        color: #ffffff;
+      }
+
+      .text-white {
+        color: #ffffff;
+      }
+      .text-white span {
+        color: #2e7d32;
+      } /* Your brand green */
+
+      .services-bento-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 320px);
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .s-bento-item {
+        background: #0f0e0e;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 28px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .s-bento-item:hover {
+        transform: translateY(-8px);
+        border-color: #2e7d32;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Grid Layout Logic */
+      .s-main {
+        grid-column: span 2;
+      }
+      .s-video {
+        grid-column: span 1;
+      }
+      .s-glass {
+        grid-column: span 1;
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+      }
+      .s-featured {
+        grid-column: span 2;
+        background: linear-gradient(135deg, #0f0e0e 0%, #050117 100%);
+      }
+      .s-image {
+        grid-column: span 1;
+      }
+      .s-dark {
+        grid-column: span 1;
+        background: #2e7d32;
+      } /* Brand accent card */
+
+      /* Media Assets */
+      .bg-image,
+      .bg-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+        opacity: 0.6; /* Dimmed for text readability */
+        transition: transform 0.6s ease;
+      }
+
+      .s-bento-item:hover .bg-image {
+        transform: scale(1.1);
+        opacity: 0.8;
+      }
+
+      .video-overlay-dark {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, #050117 20%, transparent 100%);
+        z-index: 2;
+      }
+
+      /* Content Styling */
+      .s-content {
+        position: relative;
+        z-index: 3;
+        padding: 30px;
+      }
+
+      .s-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      .s-content h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: #ffffff;
+      }
+
+      .s-content p {
+        font-size: 0.95rem;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1.6;
+      }
+
+      .accent-line {
+        width: 40px;
+        height: 4px;
+        background: #2e7d32;
+        margin-bottom: 15px;
+        border-radius: 2px;
+      }
+
+      /* Responsive */
+      @media (max-width: 992px) {
+        .services-bento-grid {
+          grid-template-columns: repeat(2, 1fr);
+          grid-template-rows: auto;
+        }
+        .s-main,
+        .s-featured,
+        .s-video,
+        .s-image,
+        .s-glass,
+        .s-dark {
+          grid-column: span 1;
+          min-height: 300px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .services-bento-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+    <script>
+      window.addEventListener("scroll", reveal);
+
+      function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+          var windowHeight = window.innerHeight;
+          var revealTop = reveals[i].getBoundingClientRect().top;
+          var revealPoint = 150;
+
+          if (revealTop < windowHeight - revealPoint) {
+            reveals[i].classList.add("active");
+          }
+        }
+      }
+
+      // Run once on load
+      reveal();
+    </script>
+    <!-- How You Can Help Section -->
+    <section class="help-section" id="participate-section">
+      <div class="section-container">
+        <h2 class="section-title">How Can You Help?</h2>
+        <div class="help-list">
+          <!-- Help Item 1 -->
+          <div class="help-item reveal">
+            <div class="help-number">1</div>
+            <div class="help-content">
+              <h4>Financial Support</h4>
+              <p>
+                Make a <span class="highlight">tax-deductible donation</span> to
+                support the construction of our hospital in Ghana and help us
+                provide sustainable healthcare solutions.
+              </p>
+            </div>
+          </div>
+
+          <!-- Help Item 2 -->
+          <div class="help-item reveal">
+            <div class="help-number">2</div>
+            <div class="help-content">
+              <h4>Time & Equipment</h4>
+              <p>
+                If you have free time to share, help us gather medical equipment
+                and coordinate its shipment by container to Ghana. Every piece
+                helps save lives.
+              </p>
+            </div>
+          </div>
+
+          <!-- Help Item 3 -->
+          <div class="help-item reveal">
+            <div class="help-number">3</div>
+            <div class="help-content">
+              <h4>Medical Equipment Donation</h4>
+              <p>
+                If you operate a clinic or health facility, help us with valid,
+                usable medical equipment and furnishings. Your retired equipment
+                could be life-saving elsewhere.
+              </p>
+            </div>
+          </div>
+
+          <!-- Help Item 4 -->
+          <div class="help-item reveal">
+            <div class="help-number">4</div>
+            <div class="help-content">
+              <h4>Fundraising Support</h4>
+              <p>
+                Help us with our fundraising efforts. Email us at
+                <span class="highlight">contact@health4yu.de</span> about
+                organizing fundraising events or campaigns for the hospital.
+              </p>
+            </div>
+          </div>
+
+          <!-- Help Item 5 -->
+          <div class="help-item reveal">
+            <div class="help-number">5</div>
+            <div class="help-content">
+              <h4>Professional Skills</h4>
+              <p>
+                If you have any other knowledge or capacity that can help us
+                (IT, medical, construction, engineering, transportation, etc.),
+                get in touch! Every skill matters.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Volunteer Impact Section -->
+    <section class="volunteer-impact">
+      <div class="section-container">
+        <div class="impact-content">
+          <h2 class="section-title">The Power of Volunteering</h2>
+
+          <p>
+            Volunteers play a very meaningful role in the work of our
+            organization. They support us with their valuable ideas, impulses,
+            donations, humanitarian operations and assume representational tasks
+            as ambassadors.
+          </p>
+
+          <p>
+            Their voluntary engagement and civic work keeps our organization in
+            motion and contributes to the improvement of the quality level of
+            our organization.
+          </p>
+
+          <p>
+            Your voluntary assistance is also very much needed. Please contact
+            us via email with your name and contact number. We will soon get
+            back to you.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final Call to Action -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2>Ready to Make a Difference?</h2>
+        <p>
+          Join our community of dedicated volunteers and donors who are
+          transforming healthcare access worldwide.
+        </p>
+        <div class="cta-buttons">
+          <a href="mailto:contact@health4yu.de" class="btn-success">
+            <i class="fas fa-envelope"></i> Email Us Today
+          </a>
+          <a href="Donate.html" class="btn-primary">
+            <i class="fas fa-heart"></i> Support Our Mission
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <p>
+          Contact us at:
+          <a
+            href="mailto:contact@health4yu.de"
+            style="color: var(--accent-secondary)"
+            >contact@health4yu.de</a
+          >
+        </p>
+        <p>&copy; 2025 HEALTH4YU. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile Navigation Toggle
+      const menuToggle = document.getElementById("menuToggle");
+      const mainNav = document.getElementById("mainNav");
+
+      menuToggle.addEventListener("click", () => {
+        menuToggle.classList.toggle("active");
+        mainNav.classList.toggle("active");
+      });
+
+      // Close mobile menu when clicking on a link
+      document.querySelectorAll("#mainNav a").forEach((link) => {
+        link.addEventListener("click", () => {
+          menuToggle.classList.remove("active");
+          mainNav.classList.remove("active");
+        });
+      });
+
+      // Canvas Animation
+      function initializeCanvasAnimation() {
+        const canvas = document.getElementById("heroCanvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+
+        function setSize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener("resize", setSize);
+        setSize();
+
+        function animate() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          const time = Date.now() * 0.0008;
+
+          // Animated grid (Subtle)
+          ctx.strokeStyle = "rgba(0, 212, 255, 0.05)";
+          ctx.lineWidth = 1;
+          const spacing = 50;
+          for (let i = 0; i < canvas.height / spacing; i++) {
+            const offset = (time * 20) % spacing;
+            ctx.beginPath();
+            ctx.moveTo(0, i * spacing + offset);
+            ctx.lineTo(canvas.width, i * spacing + offset);
+            ctx.stroke();
+          }
+
+          // Floating particles
+          for (let i = 0; i < 20; i++) {
+            const x =
+              Math.sin(time + i * 5) * (canvas.width / 3) + canvas.width / 2;
+            const y =
+              Math.cos(time * 0.5 + i) * (canvas.height / 3) +
+              canvas.height / 2;
+            const size = Math.sin(time + i) * 2 + 2;
+            ctx.fillStyle = `rgba(0, 212, 255, ${
+              0.2 + Math.sin(time + i) * 0.1
+            })`;
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          requestAnimationFrame(animate);
+        }
+        animate();
+      }
+
+      // Initialize everything when DOM is loaded
+      document.addEventListener("DOMContentLoaded", () => {
+        initializeCanvasAnimation();
+
+        // Add fade-in animation to elements
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px",
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("reveal");
+            }
+          });
+        }, observerOptions);
+
+        // Observe all elements for animation
+        document
+          .querySelectorAll(".reveal, .action-card, .help-item, .testimonial")
+          .forEach((el) => {
+            observer.observe(el);
+          });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute("href");
+            if (targetId === "#") return;
+
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: "smooth",
+              });
+            }
+          });
+        });
+
+        // Add floating animation to icons
+        document.querySelectorAll(".float").forEach((el) => {
+          el.style.animationDelay = Math.random() * 2 + "s";
+        });
+      });
+    </script>
+  </body>
+</html>

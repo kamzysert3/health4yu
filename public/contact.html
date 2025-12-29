@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact us — Health4Yu</title>
+    <link rel="icon" type="image/x-icon" href="ad (4).jpg" />
+    <link rel="icon" type="image/png" href="ad (3).jpg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <style>
+      :root {
+        --bg-dark: #08080a;
+        --bg-lighter: #121217;
+        --accent: #0066ff;
+        --accent-2: #00d4ff;
+        --glass: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.06);
+        --text: #ffffff;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Segoe UI, system-ui, -apple-system, Helvetica, Arial;
+        background: var(--bg-dark);
+        color: var(--text);
+      }
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(8, 8, 10, 0.9);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+      }
+      .header .header-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--accent);
+        font-weight: 800;
+      }
+      .nav a {
+        color: var(--text);
+        text-decoration: none;
+        margin-left: 18px;
+        font-weight: 600;
+      }
+      main {
+        padding: 110px 20px 60px;
+      }
+
+      .page-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        gap: 28px;
+      }
+      @media (max-width: 900px) {
+        .page-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .card {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          transparent
+        );
+        padding: 28px;
+        border-radius: 18px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+      h1 {
+        margin: 0 0 8px;
+      }
+      p.lead {
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      @media (max-width: 600px) {
+        .row {
+          grid-template-columns: 1fr;
+        }
+      }
+      input,
+      textarea,
+      select {
+        background: #0b0b0d;
+        border: 1px solid var(--glass-border);
+        padding: 12px;
+        border-radius: 10px;
+        color: var(--text);
+        outline: none;
+      }
+      label.small {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        border: 0;
+        color: #fff;
+        padding: 12px 16px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .btn.ghost {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .aside .info {
+        margin-bottom: 18px;
+      }
+      .upload-area {
+        border: 1px dashed rgba(255, 255, 255, 0.06);
+        padding: 14px;
+        border-radius: 10px;
+        text-align: center;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.01),
+          transparent
+        );
+      }
+      .note {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.95rem;
+      }
+      .success {
+        color: #00ff88;
+        font-weight: 700;
+      }
+      .failed {
+        color: #ff4d4d;
+        font-weight: 700;
+      }
+
+      footer {
+        max-width: 1200px;
+        margin: 40px auto 80px;
+        padding: 20px;
+        color: rgba(255, 255, 255, 0.6);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <a href="index.html" class="logo">
+          <i class="fas fa-heartbeat"></i>
+          <span>HEALTH4YU</span>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="mainNav">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/participate">Volunteer</a></li>
+
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/Donate" class="btn-donate">Donate Now</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="page-grid">
+        <section class="card">
+          <h1 class="section-title">Contact Us</h1>
+          <p class="lead">
+            Have questions, partnership requests or documents to send? Use the
+            form — we'll get back shortly.
+          </p>
+
+          <form
+            id="contactForm"
+            action="/mail"
+            method="post"
+          >
+            <div class="row">
+              <input name="name" placeholder="Your name" required />
+              <input
+                name="email"
+                placeholder="Your email"
+                type="email"
+                required
+              />
+            </div>
+            <input name="subject" placeholder="Subject" />
+            <textarea
+              name="message"
+              placeholder="Message"
+              rows="6"
+              required
+            ></textarea>
+
+            <div>
+              <label class="small">Attach document (PDF, JPG)</label>
+              <div class="upload-area" style="margin-top: 8px">
+                <input
+                  id="fileInput"
+                  type="file"
+                  accept="application/pdf,image/*"
+                  style="display: block; margin: 0 auto"
+                />
+                <input type="hidden" name="uploadedFilename" id="uploadedFilename" />
+                <input type="hidden" name="uploadedOriginalName" id="uploadedOriginalName" />
+                <div class="note" id="uploadNote" style="margin-top: 8px">
+                  Max 20MB. Use the Upload button to attach the document to your message.
+                </div>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn" type="submit">Send Email</button>
+              <button class="btn ghost" type="button" id="uploadBtn">
+                Upload Document
+              </button>
+            </div>
+            <div id="uploadResp" class="note" style="margin-top: 8px"></div>
+            <div id="formFeedback" class="note" style="margin-top: 8px"></div>
+          </form>
+        </section>
+
+        <aside class="aside">
+          <div class="card">
+            <h3 class="section-subtitle">Contact Details</h3>
+            <div class="info">
+              <p class="note"><strong>Email:</strong> contact@health4yu.de</p>
+            </div>
+            <div>
+              <h4>How to send documents</h4>
+              <p class="note">
+                Use the upload button above to securely send medical reports.
+                For large packages consider using secure file transfer.
+              </p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer>© 2025 HEALTH4YU — Building a healthier world</footer>
+
+    <script>
+      // Mobile Navigation Toggle
+      const menuToggle = document.getElementById("menuToggle");
+      const mainNav = document.getElementById("mainNav");
+
+      menuToggle.addEventListener("click", () => {
+        menuToggle.classList.toggle("active");
+        mainNav.classList.toggle("active");
+      });
+
+      // Close mobile menu when clicking on a link
+      document.querySelectorAll("#mainNav a").forEach((link) => {
+        link.addEventListener("click", () => {
+          menuToggle.classList.remove("active");
+          mainNav.classList.remove("active");
+        });
+      });
+    </script>
+
+    <script>
+      // Upload document to backend /upload/document
+      const uploadBtn = document.getElementById("uploadBtn");
+      const fileInput = document.getElementById("fileInput");
+      const uploadResp = document.getElementById("uploadResp");
+
+      uploadBtn.addEventListener("click", async () => {
+        const file = fileInput.files[0];
+        if (!file)
+          return (uploadResp.textContent = "Please pick a file first.");
+        uploadResp.textContent = "Uploading...";
+        try {
+          const fd = new FormData();
+          fd.append("document", file);
+          const res = await fetch("/upload/document", {
+            method: "POST",
+            body: fd,
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || JSON.stringify(data));
+          uploadResp.innerHTML =
+            `Uploaded: <strong>${data.originalname}</strong> (${Math.round(
+              data.size / 1024
+            )} KB)` + `<div class="note">Saved at: ${data.path}</div>`;
+          // populate hidden inputs so the /mail route can attach the file
+          document.getElementById('uploadedFilename').value = data.filename;
+          document.getElementById('uploadedOriginalName').value = data.originalname;
+          document.getElementById('uploadNote').textContent = 'File attached and ready to send.';
+          // clear the visible file input so the browser won't include the file in the final form POST
+          fileInput.value = '';
+          // optionally disable the upload button to prevent re-uploads
+          uploadBtn.disabled = true;
+        } catch (err) {
+          uploadResp.textContent = "Upload failed: " + (err.message || err);
+        }
+      });
+
+      // if user submits the form but has selected a file and not uploaded it yet,
+      // auto-upload it first, then submit the form automatically
+      const contactForm = document.getElementById('contactForm');
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formFeedback = document.getElementById('formFeedback');
+        formFeedback.textContent = '';
+
+        // If user selected a file but didn't upload it, upload it first
+        const file = fileInput.files[0];
+        const uploaded = document.getElementById('uploadedFilename').value;
+        if (file && !uploaded) {
+          uploadResp.textContent = 'Uploading file before sending...';
+          try {
+            const fd = new FormData();
+            fd.append('document', file);
+            const res = await fetch('/upload/document', { method: 'POST', body: fd });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || JSON.stringify(data));
+            document.getElementById('uploadedFilename').value = data.filename;
+            document.getElementById('uploadedOriginalName').value = data.originalname;
+            uploadResp.innerHTML = `Uploaded: <strong>${data.originalname}</strong>`;
+            // clear the file input so the file is not sent again as part of the form
+            fileInput.value = '';
+            uploadBtn.disabled = true;
+          } catch (err) {
+            uploadResp.textContent = 'Upload failed: ' + (err.message || err);
+            return;
+          }
+        }
+
+        // Send the form via AJAX and stay on the page
+        const sendBtn = contactForm.querySelector('button[type="submit"]');
+        sendBtn.disabled = true;
+        sendBtn.textContent = 'Sending...';
+        formFeedback.textContent = 'Sending message...';
+
+        try {
+          const fd2 = new FormData(contactForm);
+          const res2 = await fetch(contactForm.action, { method: 'POST', body: fd2 });
+          const json = await res2.json();
+          if (!res2.ok) throw new Error(json.error || JSON.stringify(json));
+
+          // success
+          formFeedback.innerHTML = `<strong class="success">Message sent</strong>`;
+          if (json.warning) {
+            formFeedback.innerHTML += `<div class="failed">${json.warning}</div>`;
+          }
+
+          // reset form and upload state
+          contactForm.reset();
+          document.getElementById('uploadedFilename').value = '';
+          document.getElementById('uploadedOriginalName').value = '';
+          uploadResp.textContent = '';
+          document.getElementById('uploadNote').textContent = 'Max 20MB. Use the Upload button to attach the document to your message.';
+          uploadBtn.disabled = false;
+        } catch (err) {
+          formFeedback.textContent = 'Send failed: ' + (err.message || err);
+        } finally {
+          sendBtn.disabled = false;
+          sendBtn.textContent = 'Send Email';
+        }
+      });
+    </script>
+  </body>
+</html>

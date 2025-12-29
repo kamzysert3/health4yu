@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Volunteer With Us - Health4Yu</title>
+    <link rel="icon" type="image/x-icon" href="ad (4).jpg" />
+    <link rel="icon" type="image/png" href="ad (3).jpg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --bg-dark: #08080a;
+        --bg-lighter: #121217;
+        --accent-primary: #0066ff;
+        --accent-glow: rgba(0, 102, 255, 0.4);
+        --accent-secondary: #00d4ff;
+        --text-main: #ffffff;
+        --text-secondary: #a0a0ab;
+        --glass: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --success: #00ff88;
+        --success-glow: rgba(0, 255, 136, 0.2);
+        --hologram-blue: #00f3ff;
+        --hologram-purple: #8a2be2;
+        --neon-pink: #ff00ff;
+        --matrix-green: #00ff41;
+        --panel-glow: 0 4px 20px rgba(0, 243, 255, 0.15);
+        --volunteer-orange: #ff6b35;
+        --volunteer-glow: rgba(255, 107, 53, 0.3);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        overflow-x: hidden;
+        line-height: 1.6;
+      }
+
+      /* --- ANIMATIONS --- */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes panelFloat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      @keyframes heartbeat {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        10% {
+          transform: scale(1.1);
+        }
+        20% {
+          transform: scale(1);
+        }
+        30% {
+          transform: scale(1.1);
+        }
+        40% {
+          transform: scale(1);
+        }
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .float {
+        animation: float 3s ease-in-out infinite;
+      }
+      .pulse {
+        animation: pulse 2s ease-in-out infinite;
+      }
+      .heartbeat {
+        animation: heartbeat 1.5s ease-in-out infinite;
+      }
+
+      /* --- MOBILE FIRST NAVBAR --- */
+      header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        background: rgba(8, 8, 10, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--glass-border);
+        transition: all 0.3s ease;
+      }
+
+      .header-container {
+        max-width: 1300px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 25px;
+      }
+
+      .logo {
+        font-weight: 800;
+        font-size: 1.4rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--accent-primary);
+        z-index: 1001;
+        text-decoration: none;
+      }
+
+      .logo i {
+        color: var(--accent-primary);
+        filter: drop-shadow(0 0 8px var(--accent-glow));
+      }
+
+      /* Mobile Menu Button */
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 1001;
+      }
+
+      .menu-toggle span {
+        width: 100%;
+        height: 3px;
+        background-color: var(--text-main);
+        border-radius: 3px;
+        transition: 0.3s;
+      }
+
+      .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      /* Navigation */
+      nav {
+        display: flex;
+        align-items: center;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 35px;
+        align-items: center;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        font-weight: 600;
+        transition: 0.3s;
+        position: relative;
+      }
+
+      nav ul li a:hover {
+        color: var(--text-main);
+      }
+
+      nav ul li a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent-primary);
+        transition: width 0.3s;
+      }
+
+      nav ul li a:hover::after {
+        width: 100%;
+      }
+
+      .btn-donate {
+        background: var(--accent-primary);
+        color: white;
+        padding: 12px 25px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 700;
+        transition: 0.3s;
+        margin-left: 15px;
+      }
+
+      .btn-donate:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
+        background: #0052cc;
+      }
+
+      /* --- VOLUNTEER HERO SECTION --- */
+      .volunteer-hero {
+        position: relative;
+        min-height: 80vh;
+        padding: 140px 25px 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: radial-gradient(
+            circle at 20% 50%,
+            rgba(255, 107, 53, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(0, 212, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+          url("./ad\ \(3\).jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .volunteer-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          rgba(255, 107, 53, 0.1),
+          rgba(0, 212, 255, 0.05)
+        );
+        z-index: 1;
+      }
+
+      .animated-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .volunteer-hero-content {
+        position: relative;
+        z-index: 3;
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
+        animation: fadeIn 1s ease-out;
+      }
+
+      .volunteer-hero-content h1 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        line-height: 1.1;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        letter-spacing: -1.5px;
+        background: linear-gradient(
+          135deg,
+          var(--text-main) 0%,
+          var(--text-secondary) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .volunteer-hero-content .highlight {
+        background: linear-gradient(
+          135deg,
+          var(--volunteer-orange) 0%,
+          var(--accent-secondary) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: block;
+        margin-bottom: 2rem;
+        font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      }
+
+      .volunteer-hero-content p {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 600px;
+        margin: 0 auto 2.5rem;
+        line-height: 1.6;
+      }
+
+      /* --- SECTION COMMON STYLES --- */
+      .section-container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 100px 25px;
+      }
+
+      .section-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 800;
+        margin-bottom: 3rem;
+        text-align: center;
+        background: linear-gradient(
+          135deg,
+          var(--text-main) 0%,
+          var(--accent-secondary) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* --- BENTO GRID STYLES --- */
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 220px);
+        gap: 20px;
+      }
+
+      .bento-card {
+        background: var(--bg-lighter);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s ease;
+      }
+
+      .bento-card:hover {
+        border-color: var(--volunteer-orange);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px var(--volunteer-glow);
+      }
+
+      /* Card Sizing Logic */
+      .bento-main {
+        grid-column: span 2;
+        grid-row: span 2;
+        display: flex;
+        align-items: center;
+      }
+
+      .bento-video {
+        grid-column: span 2;
+        grid-row: span 1;
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+      }
+
+      .bento-image {
+        grid-column: span 1;
+        grid-row: span 2;
+        background-size: cover;
+        background-position: center;
+        padding: 0;
+      }
+
+      .bento-secondary {
+        grid-column: span 1;
+        grid-row: span 2;
+      }
+
+      .bento-tertiary {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+
+      .bento-small {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+
+      /* Card Content */
+      .card-content {
+        padding: 30px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .video-container {
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .bento-video-element {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .video-info {
+        padding: 30px;
+        width: 50%;
+      }
+
+      /* Image Card Styles */
+      .image-caption {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 20px;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        color: white;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      /* Typography Adjustments */
+      .bento-card h3 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        color: var(--accent-secondary);
+      }
+
+      .bento-card h4 {
+        font-size: 1.1rem;
+        color: var(--text-main);
+        margin-bottom: 8px;
+      }
+
+      .bento-card p {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+
+      .card-tag {
+        background: var(--volunteer-orange);
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        display: inline-block;
+      }
+
+      .bento-icon {
+        font-size: 2rem;
+        color: var(--volunteer-orange);
+        margin-bottom: 15px;
+      }
+
+      /* Volunteer Motivation Section */
+      .motivation-section {
+        background: var(--bg-lighter);
+        border-radius: 40px;
+        margin: 40px 25px;
+        padding: 80px 25px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .motivation-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 100% 0%,
+          rgba(255, 107, 53, 0.05) 0%,
+          transparent 70%
+        );
+        z-index: 0;
+      }
+
+      .motivation-content {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .inspiration-quote {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 40px;
+        border-radius: 24px;
+        border: 1px solid var(--glass-border);
+        margin-bottom: 50px;
+        text-align: center;
+        position: relative;
+      }
+
+      .inspiration-quote::before {
+        content: '"';
+        position: absolute;
+        top: 20px;
+        left: 30px;
+        font-size: 4rem;
+        color: var(--volunteer-orange);
+        opacity: 0.3;
+        font-family: Georgia, serif;
+      }
+
+      .inspiration-quote p {
+        font-size: 1.4rem;
+        line-height: 1.8;
+        color: var(--text-main);
+        font-style: italic;
+        margin-bottom: 20px;
+      }
+
+      .quote-author {
+        color: var(--accent-secondary);
+        font-weight: 600;
+        font-size: 1rem;
+      }
+
+      /* Volunteer Roles */
+      .roles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+      }
+
+      .role-card {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 30px;
+        border-radius: 20px;
+        border: 1px solid var(--glass-border);
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .role-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--volunteer-orange);
+        box-shadow: 0 20px 40px var(--volunteer-glow);
+      }
+
+      .role-icon {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        display: block;
+        color: var(--volunteer-orange);
+      }
+
+      .role-card h4 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        color: var(--text-main);
+      }
+
+      /* Ghana Experience Section */
+      .ghana-experience {
+        padding: 100px 25px;
+      }
+
+      .experience-timeline {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .experience-day {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 30px;
+        border-radius: 20px;
+        border: 1px solid var(--glass-border);
+        margin-bottom: 30px;
+        position: relative;
+        padding-left: 70px;
+        transition: all 0.3s ease;
+      }
+
+      .experience-day:hover {
+        border-color: var(--volunteer-orange);
+        transform: translateX(10px);
+      }
+
+      .day-number {
+        position: absolute;
+        left: 20px;
+        top: 30px;
+        width: 40px;
+        height: 40px;
+        background: var(--volunteer-orange);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+
+      .day-content h4 {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        color: var(--accent-secondary);
+      }
+
+      /* Application Form */
+      .application-section {
+        background: var(--bg-lighter);
+        border-radius: 40px;
+        margin: 40px 25px;
+        padding: 80px 25px;
+      }
+
+      .application-form {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-main);
+        font-weight: 600;
+      }
+
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--glass-border);
+        border-radius: 12px;
+        color: var(--text-main);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .form-group input:focus,
+      .form-group textarea:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: var(--volunteer-orange);
+        box-shadow: 0 0 0 2px var(--volunteer-glow);
+      }
+
+      /* Buttons */
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--volunteer-orange) 0%,
+          #ff8c42 100%
+        );
+        color: white;
+        padding: 18px 40px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        display: inline-block;
+        transition: all 0.3s ease;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .btn-primary::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: 0.5s;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 40px var(--volunteer-glow);
+      }
+
+      .btn-primary:hover::before {
+        left: 100%;
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--accent-secondary);
+        padding: 18px 40px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        display: inline-block;
+        transition: all 0.3s ease;
+        border: 2px solid var(--accent-secondary);
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .btn-secondary:hover {
+        background: rgba(0, 212, 255, 0.1);
+        transform: translateY(-3px);
+      }
+
+      /* FOOTER */
+      footer {
+        text-align: center;
+        padding: 40px 25px;
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        border-top: 1px solid var(--glass-border);
+        background: var(--bg-lighter);
+      }
+
+      /* --- RESPONSIVE DESIGN --- */
+      @media (max-width: 1200px) {
+        .bento-grid {
+          grid-template-columns: repeat(2, 1fr);
+          grid-template-rows: auto;
+        }
+
+        .bento-main,
+        .bento-video,
+        .bento-image,
+        .bento-secondary,
+        .bento-tertiary,
+        .bento-small {
+          grid-column: span 2;
+        }
+
+        .bento-image {
+          height: 300px;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .header-container {
+          padding: 20px;
+        }
+
+        .menu-toggle {
+          display: flex;
+        }
+
+        nav {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+          background: rgba(8, 8, 10, 0.98);
+          backdrop-filter: blur(30px);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          transform: translateX(-100%);
+          transition: transform 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+          z-index: 1000;
+        }
+
+        nav.active {
+          transform: translateX(0);
+        }
+
+        nav ul {
+          flex-direction: column;
+          gap: 30px;
+          align-items: center;
+          padding: 0 20px;
+          width: 100%;
+        }
+
+        nav ul li {
+          width: 100%;
+          text-align: center;
+        }
+
+        nav ul li a {
+          font-size: 1.2rem;
+          padding: 15px;
+          display: block;
+          width: 100%;
+        }
+
+        .btn-donate {
+          margin: 20px 0 0 0;
+          width: 80%;
+          text-align: center;
+          padding: 15px;
+        }
+
+        .bento-video {
+          flex-direction: column;
+          height: auto;
+        }
+
+        .video-container {
+          width: 100%;
+          height: 180px;
+        }
+
+        .video-info {
+          width: 100%;
+        }
+
+        .experience-day {
+          padding: 20px;
+          padding-left: 60px;
+        }
+
+        .day-number {
+          left: 10px;
+          top: 20px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .volunteer-hero-content h1 {
+          font-size: 2.2rem;
+        }
+
+        .motivation-section,
+        .application-section {
+          margin: 20px;
+          padding: 60px 20px;
+        }
+
+        .roles-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .inspiration-quote {
+          padding: 30px 20px;
+        }
+
+        .inspiration-quote p {
+          font-size: 1.2rem;
+        }
+      }
+
+      @media (min-width: 993px) {
+        nav {
+          display: flex !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .header-container {
+          padding: 15px;
+        }
+
+        .logo {
+          font-size: 1.2rem;
+        }
+
+        .volunteer-hero {
+          padding: 120px 15px 60px;
+        }
+
+        .card-content {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header with Mobile Navbar -->
+    <header>
+      <div class="header-container">
+        <a href="index.html" class="logo">
+          <i class="fas fa-heartbeat"></i>
+          <span>HEALTH4YU</span>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="mainNav">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/participate">Volunteer</a></li>
+
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/Donate" class="btn-donate">Donate Now</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Application Form -->
+    <section class="application-section" id="application-form">
+      <div class="section-container">
+        <h2 class="section-title">Join Our Volunteer Family</h2>
+
+        <div class="application-form">
+          <form id="volunteerForm">
+            <div class="form-group reveal">
+              <label for="fullName"
+                ><i class="fas fa-user"></i> Full Name *</label
+              >
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                required
+                placeholder="Enter your full name"
+              />
+            </div>
+
+            <div class="form-group reveal">
+              <label for="email"
+                ><i class="fas fa-envelope"></i> Email Address *</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="your.email@example.com"
+              />
+            </div>
+
+            <div class="form-group reveal">
+              <label for="phone"
+                ><i class="fas fa-phone"></i> Contact Number *</label
+              >
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                placeholder="+49 123 456 7890"
+              />
+            </div>
+
+            <div class="form-group reveal">
+              <label for="location"
+                ><i class="fas fa-map-marker-alt"></i> Location</label
+              >
+              <input
+                type="text"
+                id="location"
+                name="location"
+                placeholder="City, Country"
+              />
+            </div>
+
+            <div class="form-group reveal">
+              <label for="skills"
+                ><i class="fas fa-tools"></i> Skills & Expertise</label
+              >
+              <select id="skills" name="skills" multiple style="height: 120px">
+                <option value="medical">Medical Professional</option>
+                <option value="translation">Translation Services</option>
+                <option value="community">Community Outreach</option>
+                <option value="digital">Digital/Technical Skills</option>
+                <option value="fundraising">Fundraising</option>
+                <option value="education">Health Education</option>
+                <option value="logistics">Logistics & Planning</option>
+                <option value="other">Other Special Skills</option>
+              </select>
+              <small
+                style="
+                  color: var(--text-secondary);
+                  margin-top: 5px;
+                  display: block;
+                "
+                >Hold Ctrl/Cmd to select multiple options</small
+              >
+            </div>
+
+            <div class="form-group reveal">
+              <label for="availability"
+                ><i class="fas fa-calendar-alt"></i> Availability</label
+              >
+              <select id="availability" name="availability">
+                <option value="part-time">Part-time (5-10 hrs/week)</option>
+                <option value="full-time">Full-time (20+ hrs/week)</option>
+                <option value="weekends">Weekends Only</option>
+                <option value="flexible">Flexible Schedule</option>
+                <option value="missions">International Missions</option>
+              </select>
+            </div>
+
+            <div class="form-group reveal">
+              <label for="message"
+                ><i class="fas fa-comment"></i> Why do you want to volunteer
+                with us? *</label
+              >
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                required
+                placeholder="Share your motivation and what you hope to contribute..."
+              ></textarea>
+            </div>
+
+            <div
+              class="form-group reveal"
+              style="text-align: center; margin-top: 40px"
+            >
+              <button type="submit" class="btn-primary" style="width: 100%">
+                <i class="fas fa-paper-plane"></i> Submit Volunteer Application
+              </button>
+              <p
+                style="
+                  margin-top: 15px;
+                  color: var(--text-secondary);
+                  font-size: 0.9rem;
+                "
+              >
+                We'll review your application and contact you within 3-5
+                business days.
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final Call to Action -->
+    <section class="cta-section" style="padding: 80px 25px">
+      <div class="cta-content">
+        <h2>Ready to Move the World With Us?</h2>
+        <p
+          style="
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-secondary);
+          "
+        >
+          Your journey as a Health4Yu volunteer begins with a single step.
+          Together, we can create healthcare solutions that transcend borders
+          and transform lives.
+        </p>
+        <div
+          style="
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+          "
+        >
+          <a href="mailto:volunteer@health4yu.de" class="btn-primary">
+            <i class="fas fa-envelope"></i> Email Us Directly
+          </a>
+          <a href="tel:+491234567890" class="btn-secondary">
+            <i class="fas fa-phone"></i> Call Our Volunteer Team
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <p>
+          Volunteer inquiries:
+          <a
+            href="mailto:volunteer@health4yu.de"
+            style="color: var(--volunteer-orange)"
+            >volunteer@health4yu.de</a
+          >
+        </p>
+        <p>
+          &copy; 2025 HEALTH4YU. All Rights Reserved. | Powered by Compassion
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile Navigation Toggle
+      const menuToggle = document.getElementById("menuToggle");
+      const mainNav = document.getElementById("mainNav");
+
+      menuToggle.addEventListener("click", () => {
+        menuToggle.classList.toggle("active");
+        mainNav.classList.toggle("active");
+      });
+
+      // Close mobile menu when clicking on a link
+      document.querySelectorAll("#mainNav a").forEach((link) => {
+        link.addEventListener("click", () => {
+          menuToggle.classList.remove("active");
+          mainNav.classList.remove("active");
+        });
+      });
+
+      // Canvas Animation with volunteer theme
+      function initializeCanvasAnimation() {
+        const canvas = document.getElementById("heroCanvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+
+        function setSize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener("resize", setSize);
+        setSize();
+
+        function animate() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          const time = Date.now() * 0.0008;
+
+          // Animated grid with orange accent
+          ctx.strokeStyle = "rgba(255, 107, 53, 0.05)";
+          ctx.lineWidth = 1;
+          const spacing = 50;
+          for (let i = 0; i < canvas.height / spacing; i++) {
+            const offset = (time * 20) % spacing;
+            ctx.beginPath();
+            ctx.moveTo(0, i * spacing + offset);
+            ctx.lineTo(canvas.width, i * spacing + offset);
+            ctx.stroke();
+          }
+
+          // Heartbeat particles
+          for (let i = 0; i < 25; i++) {
+            const x =
+              Math.sin(time + i * 0.5) * (canvas.width / 4) + canvas.width / 2;
+            const y =
+              Math.cos(time * 0.7 + i) * (canvas.height / 4) +
+              canvas.height / 2;
+            const size = Math.sin(time * 2 + i) * 3 + 3;
+            const alpha = 0.2 + Math.sin(time + i) * 0.1;
+            ctx.fillStyle = `rgba(255, 107, 53, ${alpha})`;
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          // Connection lines
+          ctx.strokeStyle = "rgba(0, 212, 255, 0.1)";
+          ctx.lineWidth = 0.5;
+          for (let i = 0; i < 8; i++) {
+            const startX = Math.sin(time + i) * 100 + canvas.width / 2;
+            const startY = Math.cos(time + i) * 100 + canvas.height / 2;
+            const endX = Math.sin(time * 1.5 + i) * 300 + canvas.width / 2;
+            const endY = Math.cos(time * 1.5 + i) * 300 + canvas.height / 2;
+
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            ctx.stroke();
+          }
+
+          requestAnimationFrame(animate);
+        }
+        animate();
+      }
+
+      // Form Submission
+      document
+        .getElementById("volunteerForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const formData = {
+            name: document.getElementById("fullName").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            message: document.getElementById("message").value,
+          };
+
+          // In a real implementation, you would send this to your server
+          // For now, we'll simulate submission
+          const submitBtn = this.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerHTML;
+
+          submitBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Sending...';
+          submitBtn.disabled = true;
+
+          setTimeout(() => {
+            // Success simulation
+            submitBtn.innerHTML =
+              '<i class="fas fa-check"></i> Application Sent!';
+            submitBtn.style.background =
+              "linear-gradient(135deg, var(--success) 0%, #00cc6a 100%)";
+
+            // Show success message
+            const successMsg = document.createElement("div");
+            successMsg.innerHTML = `
+                    <div style="background: rgba(0, 255, 136, 0.1); border: 1px solid var(--success); 
+                         padding: 20px; border-radius: 12px; margin-top: 20px; text-align: center;">
+                        <h4 style="color: var(--success); margin-bottom: 10px;">
+                            <i class="fas fa-check-circle"></i> Application Received!
+                        </h4>
+                        <p style="color: var(--text-secondary);">
+                            Thank you for your interest in volunteering with Health4Yu! 
+                            We'll review your application and contact you at ${formData.email} within 3-5 business days.
+                        </p>
+                    </div>
+                `;
+
+            this.appendChild(successMsg);
+
+            // Scroll to success message
+            setTimeout(() => {
+              successMsg.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+            }, 500);
+
+            // Reset form after 5 seconds
+            setTimeout(() => {
+              this.reset();
+              submitBtn.innerHTML = originalText;
+              submitBtn.disabled = false;
+              submitBtn.style.background = "";
+              successMsg.remove();
+            }, 5000);
+          }, 2000);
+        });
+
+      // Initialize everything when DOM is loaded
+      document.addEventListener("DOMContentLoaded", () => {
+        initializeCanvasAnimation();
+
+        // Scroll reveal animation
+        function revealOnScroll() {
+          const reveals = document.querySelectorAll(".reveal");
+          const windowHeight = window.innerHeight;
+          const revealPoint = 150;
+
+          reveals.forEach((reveal) => {
+            const revealTop = reveal.getBoundingClientRect().top;
+            if (revealTop < windowHeight - revealPoint) {
+              reveal.classList.add("active");
+            }
+          });
+        }
+
+        window.addEventListener("scroll", revealOnScroll);
+        // Initial check
+        revealOnScroll();
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute("href");
+            if (targetId === "#") return;
+
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: "smooth",
+              });
+            }
+          });
+        });
+
+        // Video play/pause on hover
+        const video = document.querySelector(".bento-video-element");
+        if (video) {
+          video.addEventListener("mouseenter", () => {
+            video.play();
+          });
+
+          video.addEventListener("mouseleave", () => {
+            video.pause();
+          });
+        }
+
+        // Experience day hover effects
+        const experienceDays = document.querySelectorAll(".experience-day");
+        experienceDays.forEach((day) => {
+          day.addEventListener("mouseenter", () => {
+            day.querySelector(".day-number").style.transform = "scale(1.2)";
+          });
+
+          day.addEventListener("mouseleave", () => {
+            day.querySelector(".day-number").style.transform = "scale(1)";
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

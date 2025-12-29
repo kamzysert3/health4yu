@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Services - Health4Yu</title>
+    <link rel="icon" type="image/x-icon" href="ad (4).jpg" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --bg-dark: #08080a;
+        --bg-lighter: #121217;
+        --accent-primary: #0066ff;
+        --accent-glow: rgba(0, 102, 255, 0.4);
+        --accent-secondary: #00d4ff;
+        --text-main: #ffffff;
+        --text-secondary: #a0a0ab;
+        --glass: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.08);
+        --success: #00ff88;
+        --success-glow: rgba(0, 255, 136, 0.2);
+        --hologram-blue: #00f3ff;
+        --hologram-purple: #8a2be2;
+        --neon-pink: #ff00ff;
+        --matrix-green: #00ff41;
+        --panel-glow: 0 4px 20px rgba(0, 243, 255, 0.15);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        overflow-x: hidden;
+        line-height: 1.6;
+      }
+
+      /* --- ANIMATIONS --- */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      @keyframes panelFloat {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+
+      @keyframes hologramBorder {
+        0%,
+        100% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 0.8;
+        }
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      /* --- MOBILE FIRST NAVBAR --- */
+      header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        background: rgba(8, 8, 10, 0.95);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--glass-border);
+        transition: all 0.3s ease;
+      }
+
+      .header-container {
+        max-width: 1300px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 25px;
+      }
+
+      .logo {
+        font-weight: 800;
+        font-size: 1.4rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--accent-primary);
+        z-index: 1001;
+        text-decoration: none;
+      }
+
+      .logo i {
+        color: var(--accent-primary);
+        filter: drop-shadow(0 0 8px var(--accent-glow));
+      }
+
+      /* Mobile Menu Button */
+      .menu-toggle {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 1001;
+      }
+
+      .menu-toggle span {
+        width: 100%;
+        height: 3px;
+        background-color: var(--text-main);
+        border-radius: 3px;
+        transition: 0.3s;
+      }
+
+      .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      /* Navigation */
+      nav {
+        display: flex;
+        align-items: center;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 35px;
+        align-items: center;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        font-weight: 600;
+        transition: 0.3s;
+        position: relative;
+      }
+
+      nav ul li a:hover {
+        color: var(--text-main);
+      }
+
+      nav ul li a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--accent-primary);
+        transition: width 0.3s;
+      }
+
+      nav ul li a:hover::after {
+        width: 100%;
+      }
+
+      .btn-donate {
+        background: var(--accent-primary);
+        color: white;
+        padding: 12px 25px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 700;
+        transition: 0.3s;
+        margin-left: 15px;
+      }
+
+      .btn-donate:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
+        background: #0052cc;
+      }
+
+      /* --- HERO SECTION --- */
+      .services-hero {
+        position: relative;
+        min-height: 70vh;
+        padding: 140px 25px 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        background: radial-gradient(
+            circle at 20% 50%,
+            rgba(0, 102, 255, 0.15) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(0, 212, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+          url("./ad\ \(3\).jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      .services-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          45deg,
+          rgba(0, 102, 255, 0.1),
+          rgba(0, 212, 255, 0.05)
+        );
+        z-index: 1;
+      }
+
+      .animated-canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 2;
+      }
+
+      .services-hero-content {
+        position: relative;
+        z-index: 3;
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
+        animation: fadeIn 1s ease-out;
+      }
+
+      .services-hero-content h1 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        line-height: 1.1;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        letter-spacing: -1.5px;
+        background: linear-gradient(
+          135deg,
+          var(--text-main) 0%,
+          var(--text-secondary) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .services-hero-content h1 span {
+        background: linear-gradient(
+          135deg,
+          var(--accent-primary) 0%,
+          var(--accent-secondary) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .services-hero-content p {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 600px;
+        margin: 0 auto 2.5rem;
+        line-height: 1.6;
+      }
+
+      /* --- SECTION COMMON STYLES --- */
+      .section-container {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 100px 25px;
+      }
+
+      .section-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 800;
+        margin-bottom: 3rem;
+        text-align: center;
+        background: linear-gradient(
+          135deg,
+          var(--text-main) 0%,
+          var(--accent-secondary) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* --- BENTO GRID STYLES --- */
+      .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 220px);
+        gap: 20px;
+      }
+
+      .bento-card {
+        background: var(--bg-lighter);
+        border: 1px solid var(--glass-border);
+        border-radius: 24px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s ease;
+      }
+
+      .bento-card:hover {
+        border-color: var(--accent-primary);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 102, 255, 0.15);
+      }
+
+      /* Card Sizing Logic */
+      .bento-main {
+        grid-column: span 2;
+        grid-row: span 2;
+        display: flex;
+        align-items: center;
+      }
+
+      .bento-video {
+        grid-column: span 2;
+        grid-row: span 1;
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+      }
+
+      .bento-image {
+        grid-column: span 1;
+        grid-row: span 2;
+        background-size: cover;
+        background-position: center;
+        padding: 0;
+      }
+
+      .bento-secondary {
+        grid-column: span 1;
+        grid-row: span 2;
+      }
+
+      .bento-tertiary {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+
+      .bento-small {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+
+      /* Card Content */
+      .card-content {
+        padding: 30px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .video-container {
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .bento-video-element {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .video-info {
+        padding: 30px;
+        width: 50%;
+      }
+
+      /* Image Card Styles */
+      .image-caption {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 20px;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+        color: white;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      /* Typography Adjustments */
+      .bento-card h3 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+        color: var(--accent-secondary);
+      }
+
+      .bento-card h4 {
+        font-size: 1.1rem;
+        color: var(--text-main);
+        margin-bottom: 8px;
+      }
+
+      .bento-card p {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+
+      .card-tag {
+        background: var(--accent-primary);
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        display: inline-block;
+      }
+
+      .bento-icon {
+        font-size: 2rem;
+        color: var(--accent-secondary);
+        margin-bottom: 15px;
+      }
+
+      /* Service Detail Sections */
+      .service-detail {
+        background: var(--bg-lighter);
+        border-radius: 40px;
+        margin: 40px 25px;
+        padding: 80px 25px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .service-detail::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at 100% 0%,
+          rgba(0, 102, 255, 0.05) 0%,
+          transparent 70%
+        );
+        z-index: 0;
+      }
+
+      .service-content {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .service-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+      }
+
+      .feature-card {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 30px;
+        border-radius: 20px;
+        border: 1px solid var(--glass-border);
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        border-color: var(--accent-primary);
+        box-shadow: 0 20px 40px rgba(0, 102, 255, 0.2);
+      }
+
+      .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+        display: block;
+        color: var(--accent-secondary);
+      }
+
+      .feature-card h4 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        color: var(--text-main);
+      }
+
+      /* Process Timeline */
+      .process-timeline {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin: 60px 0;
+      }
+
+      .process-timeline::before {
+        content: "";
+        position: absolute;
+        top: 25px;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          to right,
+          var(--accent-primary),
+          var(--accent-secondary)
+        );
+        z-index: 0;
+      }
+
+      .process-step {
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        background: var(--bg-dark);
+        padding: 0 15px;
+      }
+
+      .step-number {
+        width: 50px;
+        height: 50px;
+        background: var(--accent-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        font-weight: 700;
+        font-size: 1.2rem;
+      }
+
+      /* CTA SECTION */
+      .cta-section {
+        text-align: center;
+        padding: 100px 25px;
+      }
+
+      .cta-content {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .cta-content h2 {
+        font-size: clamp(2.5rem, 4vw, 3.5rem);
+        margin-bottom: 2rem;
+        background: linear-gradient(
+          135deg,
+          var(--text-main) 0%,
+          var(--accent-secondary) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--accent-primary) 0%,
+          var(--accent-secondary) 100%
+        );
+        color: white;
+        padding: 18px 40px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        display: inline-block;
+        transition: all 0.3s ease;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        font-size: 1rem;
+      }
+
+      .btn-primary::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: 0.5s;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 40px rgba(0, 102, 255, 0.3);
+      }
+
+      .btn-primary:hover::before {
+        left: 100%;
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--accent-secondary);
+        padding: 18px 40px;
+        border-radius: 14px;
+        text-decoration: none;
+        font-weight: 700;
+        display: inline-block;
+        transition: all 0.3s ease;
+        border: 2px solid var(--accent-secondary);
+        font-size: 1rem;
+      }
+
+      .btn-secondary:hover {
+        background: rgba(0, 212, 255, 0.1);
+        transform: translateY(-3px);
+      }
+
+      /* FOOTER */
+      footer {
+        text-align: center;
+        padding: 40px 25px;
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        border-top: 1px solid var(--glass-border);
+        background: var(--bg-lighter);
+      }
+
+      /* --- RESPONSIVE DESIGN --- */
+      @media (max-width: 1200px) {
+        .bento-grid {
+          grid-template-columns: repeat(2, 1fr);
+          grid-template-rows: auto;
+        }
+
+        .bento-main,
+        .bento-video,
+        .bento-image,
+        .bento-secondary,
+        .bento-tertiary,
+        .bento-small {
+          grid-column: span 2;
+        }
+
+        .bento-image {
+          height: 300px;
+        }
+      }
+
+      @media (max-width: 992px) {
+        .header-container {
+          padding: 20px;
+        }
+
+        .menu-toggle {
+          display: flex;
+        }
+
+        nav {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+          background: rgba(8, 8, 10, 0.98);
+          backdrop-filter: blur(30px);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          transform: translateX(-100%);
+          transition: transform 0.4s cubic-bezier(0.645, 0.045, 0.355, 1);
+          z-index: 1000;
+        }
+
+        nav.active {
+          transform: translateX(0);
+        }
+
+        nav ul {
+          flex-direction: column;
+          gap: 30px;
+          align-items: center;
+          padding: 0 20px;
+          width: 100%;
+        }
+
+        nav ul li {
+          width: 100%;
+          text-align: center;
+        }
+
+        nav ul li a {
+          font-size: 1.2rem;
+          padding: 15px;
+          display: block;
+          width: 100%;
+        }
+
+        .btn-donate {
+          margin: 20px 0 0 0;
+          width: 80%;
+          text-align: center;
+          padding: 15px;
+        }
+
+        .bento-video {
+          flex-direction: column;
+          height: auto;
+        }
+
+        .video-container {
+          width: 100%;
+          height: 180px;
+        }
+
+        .video-info {
+          width: 100%;
+        }
+
+        .process-timeline {
+          flex-direction: column;
+          gap: 40px;
+        }
+
+        .process-timeline::before {
+          width: 2px;
+          height: 100%;
+          top: 0;
+          left: 25px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .services-hero-content h1 {
+          font-size: 2.2rem;
+        }
+
+        .service-detail,
+        .service-section {
+          margin: 20px;
+          padding: 60px 20px;
+        }
+
+        .service-features {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (min-width: 993px) {
+        nav {
+          display: flex !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .header-container {
+          padding: 15px;
+        }
+
+        .logo {
+          font-size: 1.2rem;
+        }
+
+        .services-hero {
+          padding: 120px 15px 60px;
+        }
+
+        .card-content {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header with Mobile Navbar -->
+    <header>
+      <div class="header-container">
+        <a href="index.html" class="logo">
+          <i class="fas fa-heartbeat"></i>
+          <span>HEALTH4YU</span>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="mainNav">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/participate">Volunteer</a></li>
+
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/Donate" class="btn-donate">Donate Now</a></li>    
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Services Hero Section -->
+    <section class="services-hero" id="services-hero">
+      <canvas class="animated-canvas" id="heroCanvas"></canvas>
+
+      <div class="services-hero-content">
+        <h1>Comprehensive <span>Healthcare Services</span></h1>
+        <p>
+          Bridging medical expertise across continents through innovative
+          services designed to transform healthcare delivery and accessibility.
+        </p>
+        <a href="#services-grid" class="btn-primary">
+          <i class="fas fa-arrow-down"></i> Explore Our Services
+        </a>
+      </div>
+    </section>
+
+    <!-- Services Bento Grid -->
+    <section class="services-section" id="services-grid">
+      <div class="section-container">
+        <h2 class="section-title">Our Service Ecosystem</h2>
+
+        <div class="bento-grid">
+          <div class="bento-card bento-main reveal">
+            <div class="card-content">
+              <span class="card-tag">Core Service</span>
+              <h3>Health Consultations & Second Opinions</h3>
+              <p>
+                Access expert medical consultations from German and African
+                specialists. Our bilingual healthcare professionals provide
+                comprehensive assessments, treatment recommendations, and second
+                opinions to ensure you receive the best possible care. We
+                facilitate virtual consultations, in-person appointments, and
+                ongoing case management.
+              </p>
+              <div style="margin-top: 20px">
+                <span class="card-tag" style="background: var(--success)"
+                  >Available 24/7</span
+                >
+                <span
+                  class="card-tag"
+                  style="background: var(--hologram-purple)"
+                  >Bilingual Support</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="bento-card bento-video reveal">
+            <div class="video-container">
+              <video
+                autoplay
+                muted
+                loop
+                playsinline
+                poster="sw (5).jpg"
+                class="bento-video-element"
+              >
+                <source
+                  src="https://cdn.pixabay.com/video/2024/06/06/215484_tiny.mp4"
+                  type="video/mp4"
+                />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
+            <div class="card-content video-info">
+              <span class="card-tag">Medical Translation</span>
+              <h4>Expert Medical Report Translation</h4>
+              <p>
+                Accurate translation of complex medical documents between German
+                and English/French, ensuring complete understanding across
+                language barriers.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="bento-card bento-image reveal"
+            style="background-image: url('sw\ \(1\).jpg')"
+          >
+            <div class="image-caption">
+              <span>International Medical Collaboration</span>
+            </div>
+          </div>
+
+          <div class="bento-card bento-secondary reveal">
+            <div class="card-content">
+              <i class="fas fa-handshake-angle bento-icon"></i>
+              <h4>Medical Assistance & Advocacy</h4>
+              <p>
+                Comprehensive support navigating healthcare systems, insurance
+                claims, treatment coordination, and patient advocacy services
+                across international borders.
+              </p>
+              <div style="margin-top: 15px">
+                <span
+                  class="card-tag"
+                  style="font-size: 0.6rem; padding: 3px 8px"
+                  >Patient Navigation</span
+                >
+                <span
+                  class="card-tag"
+                  style="font-size: 0.6rem; padding: 3px 8px"
+                  >Insurance Support</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="bento-card bento-tertiary reveal">
+            <div class="card-content">
+              <i class="fas fa-globe bento-icon"></i>
+              <h4>Bilateral Health Relations</h4>
+              <p>
+                Developing sustainable healthcare partnerships between Germany
+                and African nations through policy development, infrastructure
+                projects, and knowledge exchange.
+              </p>
+            </div>
+          </div>
+
+          <div class="bento-card bento-small reveal">
+            <div class="card-content">
+              <i class="fas fa-exchange-alt bento-icon"></i>
+              <h4>Medical Exchange Programs</h4>
+              <p>
+                Facilitating professional exchanges for healthcare providers to
+                share expertise, techniques, and best practices across
+                continents.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Medical Translation Service Detail -->
+    <section class="service-detail">
+      <div class="section-container">
+        <h2 class="section-title">Medical Translation & Second Opinions</h2>
+        <div class="service-content">
+          <div class="mission-statement reveal">
+            <h3>Bridging Language Barriers in Healthcare</h3>
+            <p>
+              Our specialized medical translation service ensures accurate
+              interpretation of complex medical reports, diagnoses, and
+              treatment plans. We work with certified medical translators who
+              understand both medical terminology and cultural nuances,
+              providing you with clear, actionable information in your preferred
+              language.
+            </p>
+          </div>
+
+          <div class="service-features">
+            <div class="feature-card reveal">
+              <i class="fas fa-file-medical-alt feature-icon"></i>
+              <h4>Report Translation</h4>
+              <p>
+                Accurate translation of medical reports, lab results, discharge
+                summaries, and specialist recommendations.
+              </p>
+            </div>
+
+            <div class="feature-card reveal">
+              <i class="fas fa-user-md feature-icon"></i>
+              <h4>Second Opinions</h4>
+              <p>
+                Connect with specialist doctors for comprehensive second
+                opinions on diagnoses and treatment plans.
+              </p>
+            </div>
+
+            <div class="feature-card reveal">
+              <i class="fas fa-comments feature-icon"></i>
+              <h4>Consultation Support</h4>
+              <p>
+                Bilingual support during medical consultations to ensure
+                complete understanding between patient and doctor.
+              </p>
+            </div>
+
+            <div class="feature-card reveal">
+              <i class="fas fa-shield-alt feature-icon"></i>
+              <h4>Confidential & Secure</h4>
+              <p>
+                All translations handled with strict confidentiality and
+                GDPR-compliant data protection standards.
+              </p>
+            </div>
+          </div>
+
+          <div class="process-timeline reveal">
+            <div class="process-step">
+              <div class="step-number">1</div>
+              <h4>Submit Documents</h4>
+              <p>Upload medical reports securely</p>
+            </div>
+            <div class="process-step">
+              <div class="step-number">2</div>
+              <h4>Expert Translation</h4>
+              <p>Certified medical translators review</p>
+            </div>
+            <div class="process-step">
+              <div class="step-number">3</div>
+              <h4>Specialist Review</h4>
+              <p>Medical specialists analyze content</p>
+            </div>
+            <div class="process-step">
+              <div class="step-number">4</div>
+              <h4>Deliver Results</h4>
+              <p>Receive translated report & recommendations</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- International Projects Section -->
+    <section class="services-section">
+      <div class="section-container">
+        <h2 class="section-title">International Health Projects</h2>
+        <div class="bento-grid">
+          <div class="bento-card bento-secondary reveal">
+            <div class="card-content">
+              <i class="fas fa-hospital bento-icon"></i>
+              <h4>Hospital Development</h4>
+              <p>
+                Planning and implementing sustainable hospital infrastructure
+                projects in underserved regions across Africa.
+              </p>
+              <div style="margin-top: 15px">
+                <span
+                  class="card-tag"
+                  style="font-size: 0.6rem; padding: 3px 8px"
+                  >Ghana 2024</span
+                >
+                <span
+                  class="card-tag"
+                  style="font-size: 0.6rem; padding: 3px 8px"
+                  >Rwanda 2025</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="bento-card bento-tertiary reveal">
+            <div class="card-content">
+              <i class="fas fa-graduation-cap bento-icon"></i>
+              <h4>Medical Training</h4>
+              <p>
+                Developing and delivering specialized medical training programs
+                for healthcare professionals in partner countries.
+              </p>
+            </div>
+          </div>
+
+          <div class="bento-card bento-small reveal">
+            <div class="card-content">
+              <i class="fas fa-network-wired bento-icon"></i>
+              <h4>Policy Networking</h4>
+              <p>
+                Facilitating connections between health policymakers to share
+                best practices and develop collaborative strategies.
+              </p>
+            </div>
+          </div>
+
+          <div
+            class="bento-card bento-image reveal"
+            style="background-image: url('V2.png'); grid-column: span 1"
+          >
+            <div class="image-caption">
+              <span>Innovative Health Programs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final Call to Action -->
+    <section class="cta-section">
+      <div class="cta-content">
+        <h2>Ready to Access Our Services?</h2>
+        <p
+          style="
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            color: var(--text-secondary);
+          "
+        >
+          Whether you need medical translation, a second opinion, or want to
+          collaborate on international health projects, we're here to help.
+        </p>
+        <div
+          style="
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+          "
+        >
+          <a href="contact.html" class="btn-primary">
+            <i class="fas fa-envelope"></i> Request Service
+          </a>
+          <a href="participate.html" class="btn-secondary">
+            <i class="fas fa-phone-alt"></i> Schedule Consultation
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <p>
+          Contact us at:
+          <a
+            href="mailto:contact@health4yu.de"
+            style="color: var(--accent-secondary)"
+            >contact@health4yu.de</a
+          >
+        </p>
+        <p>&copy; 2025 HEALTH4YU. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile Navigation Toggle
+      const menuToggle = document.getElementById("menuToggle");
+      const mainNav = document.getElementById("mainNav");
+
+      menuToggle.addEventListener("click", () => {
+        menuToggle.classList.toggle("active");
+        mainNav.classList.toggle("active");
+      });
+
+      // Close mobile menu when clicking on a link
+      document.querySelectorAll("#mainNav a").forEach((link) => {
+        link.addEventListener("click", () => {
+          menuToggle.classList.remove("active");
+          mainNav.classList.remove("active");
+        });
+      });
+
+      // Canvas Animation
+      function initializeCanvasAnimation() {
+        const canvas = document.getElementById("heroCanvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+
+        function setSize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener("resize", setSize);
+        setSize();
+
+        function animate() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          const time = Date.now() * 0.0008;
+
+          // Animated grid (Subtle)
+          ctx.strokeStyle = "rgba(0, 212, 255, 0.05)";
+          ctx.lineWidth = 1;
+          const spacing = 50;
+          for (let i = 0; i < canvas.height / spacing; i++) {
+            const offset = (time * 20) % spacing;
+            ctx.beginPath();
+            ctx.moveTo(0, i * spacing + offset);
+            ctx.lineTo(canvas.width, i * spacing + offset);
+            ctx.stroke();
+          }
+
+          // Floating particles
+          for (let i = 0; i < 20; i++) {
+            const x =
+              Math.sin(time + i * 5) * (canvas.width / 3) + canvas.width / 2;
+            const y =
+              Math.cos(time * 0.5 + i) * (canvas.height / 3) +
+              canvas.height / 2;
+            const size = Math.sin(time + i) * 2 + 2;
+            ctx.fillStyle = `rgba(0, 212, 255, ${
+              0.2 + Math.sin(time + i) * 0.1
+            })`;
+            ctx.beginPath();
+            ctx.arc(x, y, size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+
+          requestAnimationFrame(animate);
+        }
+        animate();
+      }
+
+      // Initialize everything when DOM is loaded
+      document.addEventListener("DOMContentLoaded", () => {
+        initializeCanvasAnimation();
+
+        // Scroll reveal animation
+        function revealOnScroll() {
+          const reveals = document.querySelectorAll(".reveal");
+          const windowHeight = window.innerHeight;
+          const revealPoint = 150;
+
+          reveals.forEach((reveal) => {
+            const revealTop = reveal.getBoundingClientRect().top;
+            if (revealTop < windowHeight - revealPoint) {
+              reveal.classList.add("active");
+            }
+          });
+        }
+
+        window.addEventListener("scroll", revealOnScroll);
+        // Initial check
+        revealOnScroll();
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute("href");
+            if (targetId === "#") return;
+
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: "smooth",
+              });
+            }
+          });
+        });
+
+        // Video play/pause on hover
+        const video = document.querySelector(".bento-video-element");
+        if (video) {
+          video.addEventListener("mouseenter", () => {
+            video.play();
+          });
+
+          video.addEventListener("mouseleave", () => {
+            video.pause();
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donate to us — Health4Yu</title>
+    <link rel="icon" type="image/x-icon" href="ad (4).jpg" />
+    <link rel="icon" type="image/png" href="ad (3).jpg" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="styles/styles.css" />
+    <style>
+      :root {
+        --bg: #06060a;
+        --card: #0f0f13;
+        --accent: #0066ff;
+        --accent-2: #00d4ff;
+        --text: #fff;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Segoe UI, system-ui, -apple-system, Helvetica, Arial;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(8, 8, 10, 0.9);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+      }
+      .header .header-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px;
+      }
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--accent);
+        font-weight: 800;
+      }
+
+      main {
+        padding: 110px 20px 60px;
+        max-width: 1100px;
+        margin: 0 auto;
+      }
+      .card {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          transparent
+        );
+        padding: 28px;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      }
+
+      .donation-grid {
+        display: grid;
+        grid-template-columns: 1fr 360px;
+        gap: 24px;
+      }
+      @media (max-width: 900px) {
+        .donation-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .preset-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+      }
+      .preset-buttons button {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        padding: 10px 12px;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        background: #0b0b0d;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        color: var(--text);
+        outline: none;
+      }
+      .btn {
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        padding: 12px 16px;
+        border-radius: 12px;
+        border: 0;
+        color: #fff;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .muted {
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .summary {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.01),
+          transparent
+        );
+        padding: 16px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <a href="index.html" class="logo">
+          <i class="fas fa-heartbeat"></i>
+          <span>HEALTH4YU</span>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav id="mainNav">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/services">Services</a></li>
+            <li><a href="/participate">Volunteer</a></li>
+
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/Donate" class="btn-donate">Donate Now</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="card">
+        <h1 class="section-title">Support Our Mission</h1>
+        <p class="muted">
+          Secure payments via Stripe Checkout. Enter an amount or pick a preset,
+          then proceed.
+        </p>
+
+        <div class="donation-grid" style="margin-top: 18px">
+          <div>
+            <form id="donateForm">
+              <label class="muted">Amount</label>
+              <div style="display: flex; gap: 12px; margin-top: 8px">
+                <input
+                  id="amount"
+                  type="number"
+                  step="0.01"
+                  min="1"
+                  placeholder="10.00"
+                  required
+                />
+                <select id="currency" style="width: 120px">
+                  <option value="eur">EUR</option>
+                  <option value="usd">USD</option>
+                  <option value="gbp">GBP</option>
+                </select>
+              </div>
+
+              <div class="preset-buttons">
+                <button type="button" data-amt="10" class="preset">€10</button>
+                <button type="button" data-amt="25" class="preset">€25</button>
+                <button type="button" data-amt="50" class="preset">€50</button>
+                <button type="button" data-amt="100" class="preset">€100</button>
+              </div>
+
+              <div style="margin-top: 16px; display: flex; gap: 10px">
+                <button class="btn" type="submit">Donate</button>
+              </div>
+
+              <div id="msg" class="muted" style="margin-top: 12px"></div>
+            </form>
+          </div>
+
+          <aside>
+            <div class="summary">
+              <h3 style="margin-top: 0">Donation Summary</h3>
+              <p class="muted">
+                Your donation helps fund health projects, equipment shipments
+                and community care.
+              </p>
+              <div style="margin-top: 12px">
+                <strong>Amount:</strong> <span id="summaryAmount">—</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Mobile Navigation Toggle
+      const menuToggle = document.getElementById("menuToggle");
+      const mainNav = document.getElementById("mainNav");
+
+      menuToggle.addEventListener("click", () => {
+        menuToggle.classList.toggle("active");
+        mainNav.classList.toggle("active");
+      });
+
+      // Close mobile menu when clicking on a link
+      document.querySelectorAll("#mainNav a").forEach((link) => {
+        link.addEventListener("click", () => {
+          menuToggle.classList.remove("active");
+          mainNav.classList.remove("active");
+        });
+      });
+    </script>
+
+    <script>
+      const form = document.getElementById("donateForm");
+      const msg = document.getElementById("msg");
+      const amountInput = document.getElementById("amount");
+      const currencySelect = document.getElementById("currency");
+      const summaryAmount = document.getElementById("summaryAmount");
+
+      function updateSummary() {
+        const a = parseFloat(amountInput.value);
+        if (!a || a <= 0) summaryAmount.textContent = "-";
+        else
+          summaryAmount.textContent =
+            a.toFixed(2) + " " + currencySelect.value.toUpperCase();
+      }
+
+      amountInput.addEventListener("input", updateSummary);
+      currencySelect.addEventListener("change", () => {
+        updateSummary();
+        updatePresetLabels();
+        updateOneClickLabel();
+      });
+
+      // preset buttons
+      function updatePresetLabels() {
+        const sym = currencySymbol(currencySelect.value);
+        document.querySelectorAll(".preset-buttons button.preset").forEach((b) => {
+          const amt = Number(b.dataset.amt);
+          b.textContent = `${sym}${formatAmount(amt, currencySelect.value)}`;
+        });
+      }
+
+      document.querySelectorAll(".preset-buttons button.preset").forEach((b) =>
+        b.addEventListener("click", () => {
+          amountInput.value = b.dataset.amt;
+          updateSummary();
+        })
+      );
+
+      // helpers
+      function currencySymbol(code) {
+        switch ((code || "").toLowerCase()) {
+          case "eur":
+            return "€";
+          case "usd":
+            return "$";
+          case "gbp":
+            return "£";
+          default:
+            return code.toUpperCase() + " ";
+        }
+      }
+
+      function formatAmount(val, code) {
+        // Keep simple formatting; decimal for cents
+        if (Number.isInteger(Number(val))) return Number(val).toFixed(0);
+        return Number(val).toFixed(2);
+      }
+
+      // initialize labels and summary on load
+      updatePresetLabels();
+      updateSummary();
+
+      async function createCheckout(amount, currency) {
+        msg.textContent = "Preparing checkout...";
+        try {
+          const base = window.location.origin;
+        const success = base + "/donate/success";
+        const cancel = base + "/donate/cancel";
+          const res = await fetch("/donate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              amount,
+              currency,
+              success_url: success,
+              cancel_url: cancel,
+            }),
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || JSON.stringify(data));
+          window.location.href = data.url;
+        } catch (err) {
+          msg.textContent = "Error: " + (err.message || err);
+        }
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const amount = parseFloat(amountInput.value);
+        const currency = currencySelect.value;
+        if (!amount || amount <= 0)
+          return (msg.textContent = "Enter a valid amount.");
+        createCheckout(amount, currency);
+      });
+    </script>
+  </body>
+</html>
