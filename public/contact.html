@@ -170,6 +170,18 @@
         font-weight: 700;
       }
 
+      .charge-banner {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.02),
+          transparent
+        );
+        border-left: 4px solid #ffb86b;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-weight: 700;
+      }
+
       /* Toast styles */
       .toasts {
         position: fixed;
@@ -245,9 +257,17 @@
         <section class="card">
           <h1 class="section-title">Contact Us</h1>
           <p class="lead">
-            Have questions, partnership requests or documents to send? Use the
-            form — we'll get back shortly.
+            Are you a patient seeking medical treatment or consultation in
+            Germany/Europe? Use the form to request a clinical assessment
+            and upload your medical reports.
           </p>
+          <div
+            id="chargeBanner"
+            class="charge-banner note"
+            style="margin-top: 8px; display: none"
+            role="status"
+            aria-live="polite"
+          ></div>
 
           <form id="contactForm" action="/mail" method="post">
             <div class="row">
@@ -287,8 +307,9 @@
                   id="uploadedOriginalName"
                 />
                 <div class="note" id="uploadNote" style="margin-top: 8px">
-                  Max 20MB. Use the Upload button to attach the document to your
-                  message.
+                  Attach medical reports (PDF, JPG). Max 20MB. Use the Upload
+                  button to attach your files — these are required for clinical
+                  assessment.
                 </div>
               </div>
             </div>
@@ -317,8 +338,12 @@
             <div>
               <h4>How to send documents</h4>
               <p class="note">
-                Use the upload button above to securely send medical reports.
-                For large packages consider using secure file transfer.
+                Please attach recent medical reports relevant to your request —
+                lab results, imaging (X-ray, CT, MRI), referral letters,
+                medication lists, and prior discharge summaries are helpful.
+                This service is fee-based; there is no charity. Use the Upload
+                button to securely send these files (Max 20MB). For large
+                packages, contact us for an alternative secure transfer option.
               </p>
             </div>
           </div>
@@ -387,6 +412,30 @@
         }
       });
 
+      // load fee and display banner on page load
+      (async function loadFee() {
+        try {
+          const r = await fetch("/mail/fee");
+          if (!r.ok) return;
+          const j = await r.json();
+          const fee = (j.feeCents / 100).toFixed(2);
+          const feeText = `This is a paid medical consultation; sending messages costs ${fee} ${j.currency.toUpperCase()} — you'll be redirected to Stripe to pay.`;
+          document.getElementById("feeNote").textContent = feeText;
+          const banner = document.getElementById("chargeBanner");
+          if (banner) {
+            banner.style.display = "block";
+            banner.textContent = `This is a paid medical consultation. Sending messages costs ${fee} ${j.currency.toUpperCase()}.`;
+          }
+          const sendBtn = document.querySelector(
+            '#contactForm button[type="submit"]'
+          );
+          if (sendBtn)
+            sendBtn.textContent = `Pay ${fee} ${j.currency.toUpperCase()} to Send`;
+        } catch (err) {
+          // ignore
+        }
+      })();
+
       // if user submits the form but has selected a file and not uploaded it yet,
       // auto-upload it first, then submit the form automatically
       const contactForm = document.getElementById("contactForm");
@@ -422,21 +471,6 @@
           }
         }
 
-        // Show configured fee (if available)
-        (async function loadFee() {
-          try {
-            const r = await fetch("/mail/fee");
-            if (!r.ok) return;
-            const j = await r.json();
-            const fee = (j.feeCents / 100).toFixed(2);
-            document.getElementById(
-              "feeNote"
-            ).textContent = `Sending messages costs ${fee} ${j.currency.toUpperCase()} — you'll be redirected to Stripe to pay.`;
-          } catch (err) {
-            // ignore
-          }
-        })();
-
         // Send the form via AJAX and stay on the page
         const sendBtn = contactForm.querySelector('button[type="submit"]');
         sendBtn.disabled = true;
@@ -471,7 +505,7 @@
           document.getElementById("uploadedOriginalName").value = "";
           uploadResp.textContent = "";
           document.getElementById("uploadNote").textContent =
-            "Max 20MB. Use the Upload button to attach the document to your message.";
+            "Attach medical reports (PDF, JPG). Max 20MB. Use the Upload button to attach your files — these are required for clinical assessment.";
           uploadBtn.disabled = false;
         } catch (err) {
           showToast("Send failed: " + (err.message || err), "error");

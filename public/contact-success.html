@@ -51,7 +51,6 @@
         Thank you — processing your payment and sending your message.
       </p>
       <p class="muted" id="status"></p>
-      <p class="muted" id="info"></p>
       <div
         style="
           margin-top: 20px;
@@ -83,14 +82,6 @@
           if (data.paid) {
             document.getElementById("message").textContent =
               "Payment confirmed — your message has been sent.";
-            if (data.previewUrl)
-              document.getElementById("info").innerHTML =
-                'Preview: <a href="' +
-                data.previewUrl +
-                '" target="_blank">view email</a>';
-            if (data.messageId)
-              document.getElementById("info").innerHTML +=
-                "<br>Message ID: " + data.messageId;
           } else {
             document.getElementById("message").textContent =
               "Payment not completed.";
