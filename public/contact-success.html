@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Donation Successful — Health4Yu</title>
+    <title>Contact Sent — Health4Yu</title>
     <style>
       body {
         margin: 0;
@@ -35,14 +35,23 @@
       .muted {
         color: rgba(255, 255, 255, 0.7);
       }
+      a.button {
+        background: linear-gradient(135deg, #0066ff, #00d4ff);
+        padding: 10px 16px;
+        border-radius: 12px;
+        color: #fff;
+        text-decoration: none;
+      }
     </style>
   </head>
   <body>
     <div class="card">
       <h1 class="h">Thank you!</h1>
-      <p id="message">Thank you for your support.</p>
+      <p id="message">
+        Thank you — processing your payment and sending your message.
+      </p>
       <p class="muted" id="status"></p>
-      <p class="muted" id="reference"></p>
+      <p class="muted" id="info"></p>
       <div
         style="
           margin-top: 20px;
@@ -51,28 +60,8 @@
           justify-content: center;
         "
       >
-        <a
-          style="
-            background: linear-gradient(135deg, #0066ff, #00d4ff);
-            padding: 10px 16px;
-            border-radius: 12px;
-            color: #fff;
-            text-decoration: none;
-          "
-          href="/"
-          >Return Home</a
-        >
-        <a
-          style="
-            background: linear-gradient(135deg, #0066ff, #00d4ff);
-            padding: 10px 16px;
-            border-radius: 12px;
-            color: #fff;
-            text-decoration: none;
-          "
-          href="/Donate"
-          >Donate Again</a
-        >
+        <a class="button" href="/">Return Home</a>
+        <a class="button" href="/contact">Back to Contact</a>
       </div>
     </div>
 
@@ -80,25 +69,35 @@
       async function fetchInfo(token) {
         try {
           const res = await fetch(
-            "/donate/info?token=" + encodeURIComponent(token)
+            "/mail/info?token=" + encodeURIComponent(token)
           );
           if (!res.ok) {
             const err = await res.json().catch(() => ({}));
             throw new Error(err.error || res.statusText || "Error");
           }
           const data = await res.json();
+
           // populate
-          if (data.amount)
-            document.getElementById(
-              "message"
-            ).innerHTML = `Amount: <strong>${data.amount} ${data.currency}</strong>`;
           document.getElementById("status").textContent =
             "Status: " + (data.status || "unknown");
-          if (data.reference)
-            document.getElementById("reference").textContent =
-              "Reference: " + data.reference;
+          if (data.paid) {
+            document.getElementById("message").textContent =
+              "Payment confirmed — your message has been sent.";
+            if (data.previewUrl)
+              document.getElementById("info").innerHTML =
+                'Preview: <a href="' +
+                data.previewUrl +
+                '" target="_blank">view email</a>';
+            if (data.messageId)
+              document.getElementById("info").innerHTML +=
+                "<br>Message ID: " + data.messageId;
+          } else {
+            document.getElementById("message").textContent =
+              "Payment not completed.";
+            document.getElementById("info").textContent =
+              "Status: " + (data.status || "unknown");
+          }
         } catch (err) {
-          // Token missing/invalid/expired or other error
           document.getElementById("message").textContent =
             "Thank you — payment processed.";
           document.getElementById("status").textContent =
@@ -110,7 +109,6 @@
         const params = new URLSearchParams(location.search);
         const token = params.get("token");
         if (!token) {
-          // If no token, show a generic message and prevent session info access
           document.getElementById("message").textContent =
             "Thank you for your support.";
           document.getElementById("status").textContent =

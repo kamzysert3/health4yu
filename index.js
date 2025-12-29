@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 // can't be reached by typing the URL — these pages are served only through the
 // protected `/donate/success` and `/donate/cancel` routes.
 app.use((req, res, next) => {
-  const blocked = ['/donate-success.html', '/donate-cancel.html'];
+  const blocked = ['/donate-success.html', '/donate-cancel.html', '/contact-success.html', '/contact-cancel.html'];
   if (blocked.includes(req.path)) return res.status(404).send('Not found');
   next();
 });

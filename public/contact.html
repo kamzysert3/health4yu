@@ -170,6 +170,39 @@
         font-weight: 700;
       }
 
+      /* Toast styles */
+      .toasts {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 9999;
+        pointer-events: none;
+      }
+      .toast {
+        min-width: 200px;
+        max-width: 360px;
+        background: rgba(0, 0, 0, 0.85);
+        color: #fff;
+        padding: 10px 14px;
+        border-radius: 10px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+        border-left: 4px solid rgba(255, 255, 255, 0.06);
+        pointer-events: auto;
+        font-weight: 600;
+      }
+      .toast.success {
+        border-left-color: #00ff88;
+      }
+      .toast.error {
+        border-left-color: #ff4d4d;
+      }
+      .toast.info {
+        border-left-color: #00d4ff;
+      }
+
       footer {
         max-width: 1200px;
         margin: 40px auto 80px;
@@ -216,11 +249,7 @@
             form — we'll get back shortly.
           </p>
 
-          <form
-            id="contactForm"
-            action="/mail"
-            method="post"
-          >
+          <form id="contactForm" action="/mail" method="post">
             <div class="row">
               <input name="name" placeholder="Your name" required />
               <input
@@ -247,10 +276,19 @@
                   accept="application/pdf,image/*"
                   style="display: block; margin: 0 auto"
                 />
-                <input type="hidden" name="uploadedFilename" id="uploadedFilename" />
-                <input type="hidden" name="uploadedOriginalName" id="uploadedOriginalName" />
+                <input
+                  type="hidden"
+                  name="uploadedFilename"
+                  id="uploadedFilename"
+                />
+                <input
+                  type="hidden"
+                  name="uploadedOriginalName"
+                  id="uploadedOriginalName"
+                />
                 <div class="note" id="uploadNote" style="margin-top: 8px">
-                  Max 20MB. Use the Upload button to attach the document to your message.
+                  Max 20MB. Use the Upload button to attach the document to your
+                  message.
                 </div>
               </div>
             </div>
@@ -262,7 +300,11 @@
               </button>
             </div>
             <div id="uploadResp" class="note" style="margin-top: 8px"></div>
+            <div id="feeNote" class="note" style="margin-top: 8px"></div>
             <div id="formFeedback" class="note" style="margin-top: 8px"></div>
+
+            <!-- Toast container (toasts are inserted here) -->
+            <div id="toasts" class="toasts" aria-live="polite"></div>
           </form>
         </section>
 
@@ -313,9 +355,8 @@
 
       uploadBtn.addEventListener("click", async () => {
         const file = fileInput.files[0];
-        if (!file)
-          return (uploadResp.textContent = "Please pick a file first.");
-        uploadResp.textContent = "Uploading...";
+        if (!file) return showToast("Please pick a file first.", "error");
+        showToast("Uploading…", "info", 4000);
         try {
           const fd = new FormData();
           fd.append("document", file);
@@ -325,86 +366,137 @@
           });
           const data = await res.json();
           if (!res.ok) throw new Error(data.error || JSON.stringify(data));
-          uploadResp.innerHTML =
-            `Uploaded: <strong>${data.originalname}</strong> (${Math.round(
+          showToast(
+            `Uploaded: ${data.originalname} (${Math.round(
               data.size / 1024
-            )} KB)` + `<div class="note">Saved at: ${data.path}</div>`;
+            )} KB)`,
+            "success"
+          );
           // populate hidden inputs so the /mail route can attach the file
-          document.getElementById('uploadedFilename').value = data.filename;
-          document.getElementById('uploadedOriginalName').value = data.originalname;
-          document.getElementById('uploadNote').textContent = 'File attached and ready to send.';
+          document.getElementById("uploadedFilename").value = data.filename;
+          document.getElementById("uploadedOriginalName").value =
+            data.originalname;
+          document.getElementById("uploadNote").textContent =
+            "File attached and ready to send.";
           // clear the visible file input so the browser won't include the file in the final form POST
-          fileInput.value = '';
+          fileInput.value = "";
           // optionally disable the upload button to prevent re-uploads
           uploadBtn.disabled = true;
         } catch (err) {
-          uploadResp.textContent = "Upload failed: " + (err.message || err);
+          showToast("Upload failed: " + (err.message || err), "error");
         }
       });
 
       // if user submits the form but has selected a file and not uploaded it yet,
       // auto-upload it first, then submit the form automatically
-      const contactForm = document.getElementById('contactForm');
-      contactForm.addEventListener('submit', async (e) => {
+      const contactForm = document.getElementById("contactForm");
+      contactForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const formFeedback = document.getElementById('formFeedback');
-        formFeedback.textContent = '';
+        const formFeedback = document.getElementById("formFeedback");
+        formFeedback.textContent = "";
 
         // If user selected a file but didn't upload it, upload it first
         const file = fileInput.files[0];
-        const uploaded = document.getElementById('uploadedFilename').value;
+        const uploaded = document.getElementById("uploadedFilename").value;
         if (file && !uploaded) {
-          uploadResp.textContent = 'Uploading file before sending...';
+          showToast("Uploading file before sending...", "info");
           try {
             const fd = new FormData();
-            fd.append('document', file);
-            const res = await fetch('/upload/document', { method: 'POST', body: fd });
+            fd.append("document", file);
+            const res = await fetch("/upload/document", {
+              method: "POST",
+              body: fd,
+            });
             const data = await res.json();
             if (!res.ok) throw new Error(data.error || JSON.stringify(data));
-            document.getElementById('uploadedFilename').value = data.filename;
-            document.getElementById('uploadedOriginalName').value = data.originalname;
-            uploadResp.innerHTML = `Uploaded: <strong>${data.originalname}</strong>`;
+            document.getElementById("uploadedFilename").value = data.filename;
+            document.getElementById("uploadedOriginalName").value =
+              data.originalname;
+            showToast(`Uploaded: ${data.originalname}`, "success");
             // clear the file input so the file is not sent again as part of the form
-            fileInput.value = '';
+            fileInput.value = "";
             uploadBtn.disabled = true;
           } catch (err) {
-            uploadResp.textContent = 'Upload failed: ' + (err.message || err);
+            showToast("Upload failed: " + (err.message || err), "error");
             return;
           }
         }
 
+        // Show configured fee (if available)
+        (async function loadFee() {
+          try {
+            const r = await fetch("/mail/fee");
+            if (!r.ok) return;
+            const j = await r.json();
+            const fee = (j.feeCents / 100).toFixed(2);
+            document.getElementById(
+              "feeNote"
+            ).textContent = `Sending messages costs ${fee} ${j.currency.toUpperCase()} — you'll be redirected to Stripe to pay.`;
+          } catch (err) {
+            // ignore
+          }
+        })();
+
         // Send the form via AJAX and stay on the page
         const sendBtn = contactForm.querySelector('button[type="submit"]');
         sendBtn.disabled = true;
-        sendBtn.textContent = 'Sending...';
-        formFeedback.textContent = 'Sending message...';
+        sendBtn.textContent = "Sending...";
+        showToast("Sending message…", "info", 4000);
 
         try {
           const fd2 = new FormData(contactForm);
-          const res2 = await fetch(contactForm.action, { method: 'POST', body: fd2 });
+          const res2 = await fetch("/mail/checkout", {
+            method: "POST",
+            body: fd2,
+          });
           const json = await res2.json();
           if (!res2.ok) throw new Error(json.error || JSON.stringify(json));
 
-          // success
-          formFeedback.innerHTML = `<strong class="success">Message sent</strong>`;
+          // If server returned a Stripe checkout URL, redirect the user to pay
+          if (json.url) {
+            window.location = json.url;
+            return;
+          }
+
+          // success (payment not required or sent immediately)
+          let successHtml = "Message sent.";
+          showToast(successHtml, "success");
           if (json.warning) {
-            formFeedback.innerHTML += `<div class="failed">${json.warning}</div>`;
+            showToast(json.warning, "error");
           }
 
           // reset form and upload state
           contactForm.reset();
-          document.getElementById('uploadedFilename').value = '';
-          document.getElementById('uploadedOriginalName').value = '';
-          uploadResp.textContent = '';
-          document.getElementById('uploadNote').textContent = 'Max 20MB. Use the Upload button to attach the document to your message.';
+          document.getElementById("uploadedFilename").value = "";
+          document.getElementById("uploadedOriginalName").value = "";
+          uploadResp.textContent = "";
+          document.getElementById("uploadNote").textContent =
+            "Max 20MB. Use the Upload button to attach the document to your message.";
           uploadBtn.disabled = false;
         } catch (err) {
-          formFeedback.textContent = 'Send failed: ' + (err.message || err);
+          showToast("Send failed: " + (err.message || err), "error");
         } finally {
           sendBtn.disabled = false;
-          sendBtn.textContent = 'Send Email';
+          sendBtn.textContent = "Send Email";
         }
       });
+
+      // Toast helper
+      function showToast(html, type = "info", duration = 4000) {
+        const id = "t-" + Date.now() + "-" + Math.round(Math.random() * 1e6);
+        const container = document.getElementById("toasts");
+        if (!container) return;
+        const div = document.createElement("div");
+        div.id = id;
+        div.className = "toast " + (type || "info");
+        div.innerHTML = html;
+        container.appendChild(div);
+        if (duration && duration > 0)
+          setTimeout(() => {
+            div.style.opacity = "0";
+            div.addEventListener("transitionend", () => div.remove());
+          }, duration);
+      }
     </script>
   </body>
 </html>

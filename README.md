@@ -49,6 +49,13 @@ Environment variables (what they are and how to get them)
 
 - MAIL_DELETE_UPLOADS — optional (default: `true`). When `true` (or unset) uploaded attachments are deleted from the `uploads/` directory after a successful email send. Set `MAIL_DELETE_UPLOADS=false` to keep uploaded files for inspection.
 
+- CONTACT_FEE_CENTS — the fee to charge for sending a contact message, specified in the smallest currency unit (cents). Default is `1000` (i.e., $10.00).
+  - Example for $10 USD: `CONTACT_FEE_CENTS=1000` and `CONTACT_FEE_CURRENCY=usd`.
+
+- CONTACT_FEE_CURRENCY — currency used for the contact fee (default: `usd`).
+
+- CONTACT_REQUIRE_PAYMENT — optional flag to enable/disable payment requirement (default: `true`). Set to `false` to allow messages without payment (useful for development).
+
 Security notes
 - Always store secrets in `.env` (or a secret store) and never commit `.env` to git. Use `gitignore` to exclude it.
 - Use the Stripe **test** keys for local development and switch to **live** keys only when you're ready to process real payments.
@@ -80,7 +87,8 @@ API endpoints
 - `GET /` — health check
 - `POST /upload/document` — multipart form upload. Field name: `document`. Returns uploaded file metadata.
 - `POST /donate` — create Stripe Checkout session. JSON body: `{ "amount": 10, "currency": "usd", "success_url": "https://example.com/success", "cancel_url": "https://example.com/cancel" }`. Returns `{ url, id }` to redirect donor to.
-- `POST /mail` — contact form endpoint. Sends an email with fields `name`, `email`, `subject`, `message`. If the form includes `uploadedFilename` (returned by `POST /upload/document`) the server will attach that file from the `uploads/` directory to the email.
+- `POST /mail` — contact form endpoint that immediately sends an email (used when payments are not required). Sends an email with fields `name`, `email`, `subject`, `message`. If the form includes `uploadedFilename` (returned by `POST /upload/document`) the server will attach that file from the `uploads/` directory to the email.
+- `POST /mail/checkout` — create a Stripe Checkout session to pay the contact submission fee (default $10). The server stores the submitted form data temporarily and returns a checkout `url`; the user is redirected to Stripe to complete payment. On success the user is redirected to a protected `contact-success` page which triggers the server to verify payment and send the stored message. See `CONTACT_FEE_CENTS` in the env variables to configure the amount.
 
 Uploads are saved to the `uploads/` directory.
 
