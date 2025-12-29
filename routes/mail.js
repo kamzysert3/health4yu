@@ -76,8 +76,8 @@ async function createTransporter() {
 
 // helper: send email from contact data and optionally delete attachments
 async function sendContactEmail({ name, email, subject, message, uploadedFilename, uploadedOriginalName, extraFiles = [] }) {
-  const from = `Website Contact <${process.env.SMTP_USER}>` || 'Website Contact <email@example.com>';
-  const to = `${process.env.SMTP_USER}` || 'email@example.com';
+  const from = process.env.SMTP_USER ? `Website Contact <${process.env.SMTP_USER}>` : 'Website Contact <email@example.com>';
+  const to = process.env.SMTP_USER ? `${process.env.SMTP_USER}` : 'email@example.com';
   const replyTo = email;
 
   const text = `Name: ${name || '—'}\nEmail: ${email || '—'}\nSubject: ${subject || '—'}\n\n${message || ''}`;
